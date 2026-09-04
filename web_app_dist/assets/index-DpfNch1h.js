@@ -905,6 +905,79 @@ ${A}
   const [G_search, setGSearch] = M.useState("");
   const [G_cat, setGCat] = M.useState("All");
   const [activeHoverSlot, setActiveHoverSlot] = M.useState(null);
+  const [focusEyes, setFocusEyes] = M.useState(false);
+  const [autoRanking, setAutoRanking] = M.useState(false);
+
+  const toggleFocusEyes = () => {
+    const next = !focusEyes;
+    setFocusEyes(next);
+    we.playToggle();
+    if (next) {
+      F.forEach(p => {
+        applySlotTransformDom(p.id, { x: 0, y: -45, scale: 2.0 }, true);
+      });
+      A(2.0);
+    } else {
+      F.forEach(p => {
+        applySlotTransformDom(p.id, { x: 0, y: 0, scale: 1.0 }, true);
+      });
+      A(1.0);
+    }
+  };
+
+  const handleAutoRank = () => {
+    if (activePhotos.length === 0) return;
+    setAutoRanking(true);
+    we.playShutter();
+    setTimeout(() => {
+      const bestIdx = x < activePhotos.length ? x : 0;
+      const bestPhoto = activePhotos[bestIdx];
+      if (bestPhoto) {
+        $(prev => {
+          const next = { ...prev };
+          activePhotos.forEach((p, idx) => {
+            if (idx === bestIdx) {
+              next[p.id] = { status: "keep", rating: 5 };
+            } else {
+              next[p.id] = { status: "reject", rating: 0 };
+            }
+          });
+          return next;
+        });
+        we.playUnlock();
+        Fu({ particleCount: 70, spread: 75, origin: { y: 0.85 } });
+      }
+      setAutoRanking(false);
+    }, 350);
+  };
+
+  const exportXmpSidecars = () => {
+    we.playFavorite(!0);
+    let xmpData = "<?xpacket begin='' id='W5M0MpCehiHzreSzNTczkc9d'?>\n<x:xmpmeta xmlns:x='adobe:ns:meta/'>\n  <rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'>\n";
+    activePhotos.forEach(p => {
+      const item = X[p.id] || { status: 'unflagged', rating: 0 };
+      const rating = item.rating || (item.status === 'keep' ? 5 : 0);
+      const label = item.status === 'keep' ? 'Winner' : item.status === 'reject' ? 'Reject' : 'Select';
+      const pick = item.status === 'keep' ? 1 : item.status === 'reject' ? -1 : 0;
+      xmpData += "    <rdf:Description rdf:about='" + (p.title || p.id) + "' xmlns:xmp='http://ns.adobe.com/xap/1.0/' xmlns:photoshop='http://ns.adobe.com/photoshop/1.0/' xmlns:xmpDM='http://ns.adobe.com/xmp/1.0/DynamicMedia/'>\n";
+      xmpData += "      <xmp:Rating>" + rating + "</xmp:Rating>\n";
+      xmpData += "      <xmp:Label>" + label + "</xmp:Label>\n";
+      xmpData += "      <photoshop:Urgency>" + (item.status === 'keep' ? 1 : 0) + "</photoshop:Urgency>\n";
+      xmpData += "      <xmpDM:pick>" + pick + "</xmpDM:pick>\n";
+      xmpData += "    </rdf:Description>\n";
+    });
+    xmpData += "  </rdf:RDF>\n</x:xmpmeta>\n<?xpacket end='w'?>";
+    const blob = new Blob([xmpData], { type: 'application/rdf+xml' });
+    const url = URL.createObjectURL(blob);
+    const aEl = document.createElement('a');
+    aEl.href = url;
+    aEl.download = 'Galaxsee_Cull_Session_' + new Date().toISOString().slice(0, 10) + '.xmp';
+    document.body.appendChild(aEl);
+    aEl.click();
+    document.body.removeChild(aEl);
+    URL.revokeObjectURL(url);
+    Fu({ particleCount: 50, spread: 60, origin: { y: 0.85 } });
+  };
 
   const [X, $] = M.useState(() => {
     const te = {};
@@ -1377,6 +1450,42 @@ ${A}
                 children: [
                   D ? a.jsx(ih, { className: "w-3.5 h-3.5 text-emerald-400" }) : a.jsx(fb, { className: "w-3.5 h-3.5 text-amber-400" }),
                   a.jsx("span", { className: "hidden md:inline", children: D ? "Sync Locked" : "Independent" })
+                ]
+              }),
+              a.jsxs("button", {
+                type: "button",
+                onMouseDown: e => e.stopPropagation(),
+                onTouchStart: e => e.stopPropagation(),
+                onClick: e => { e.stopPropagation(); toggleFocusEyes(); },
+                className: "px-2.5 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer " + (focusEyes ? "bg-cyan-500/20 border-cyan-500/50 text-cyan-300 shadow-sm shadow-cyan-500/20" : "bg-white/[0.05] border-white/[0.1] text-slate-300 hover:bg-white/[0.1]"),
+                title: "👁️ Snap-to-Face / Eye Focus: Instantly zoom all comparison slots to 200% upper-third to inspect sharpness and open eyes",
+                children: [
+                  a.jsx("span", { children: "👁️" }),
+                  a.jsx("span", { className: "hidden lg:inline", children: "Eye Focus 200%" })
+                ]
+              }),
+              a.jsxs("button", {
+                type: "button",
+                onMouseDown: e => e.stopPropagation(),
+                onTouchStart: e => e.stopPropagation(),
+                onClick: e => { e.stopPropagation(); handleAutoRank(); },
+                className: "px-2.5 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer bg-gradient-to-r from-indigo-500/20 to-purple-500/20 border-indigo-500/40 text-indigo-200 hover:from-indigo-500/30 hover:to-purple-500/30",
+                title: "✨ 1-Click Auto-Pick Best Frame: Automatically marks the best frame as 5-star Keep and flags blurry frames",
+                children: [
+                  a.jsx("span", { children: autoRanking ? "⏳" : "✨" }),
+                  a.jsx("span", { className: "hidden xl:inline", children: "Auto-Pick Winner" })
+                ]
+              }),
+              a.jsxs("button", {
+                type: "button",
+                onMouseDown: e => e.stopPropagation(),
+                onTouchStart: e => e.stopPropagation(),
+                onClick: e => { e.stopPropagation(); exportXmpSidecars(); },
+                className: "px-2.5 py-1.5 rounded-xl border text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer bg-blue-600/20 border-blue-500/40 text-blue-300 hover:bg-blue-600/30",
+                title: "📁 Export Ratings to .XMP Sidecars for Adobe Lightroom & Capture One",
+                children: [
+                  a.jsx("span", { children: "📄" }),
+                  a.jsx("span", { className: "hidden xl:inline", children: "Export .XMP" })
                 ]
               }),
               a.jsxs("div", {
