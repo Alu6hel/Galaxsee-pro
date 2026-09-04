@@ -647,7 +647,7 @@ Error generating stack: `+l.message+`
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
- */const O1=[["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}],["line",{x1:"21",x2:"16.65",y1:"21",y2:"16.65",key:"13gj7c"}],["line",{x1:"8",x2:"14",y1:"11",y2:"11",key:"durymu"}]],Kl=Le("zoom-out",O1),U1=({activeTab:d,onTabChange:u,filters:h,onFilterChange:m,onImportClick:g,onImportFolderClick:w,onOpenCullStudio:y,onOpenSettings:k,isSettingsActive:_,theme:x="dark",onOpenTutorial:tutFn})=>{var H;const[T,N]=Ju.useState(!1),A=typeof window<"u"&&!!((H=window.electronAPI)!=null&&H.isElectron),D=x==="light"||x==="light_galaxsee"||x==="blue_sky",I=D?"./light alu logo.svg":"./dark alu company logo.svg",U=()=>{var E,Z;(Z=(E=window.electronAPI)==null?void 0:E.minimize)==null||Z.call(E)},P=()=>{var E,Z;(Z=(E=window.electronAPI)==null?void 0:E.maximize)==null||Z.call(E)},ae=()=>{var E,Z;(Z=(E=window.electronAPI)==null?void 0:E.close)==null||Z.call(E)};return a.jsxs("header",{className:`h-12 w-full flex items-center justify-between px-3 select-none z-40 font-['Plus_Jakarta_Sans',sans-serif] transition-colors duration-200 ${D?"bg-white border-b border-slate-200 text-slate-800":"bg-[#111622] border-b border-[#212a3d] text-slate-200"}`,children:[a.jsxs("div",{className:"flex items-center gap-2.5 min-w-[220px]",style:{WebkitAppRegion:"drag"},children:[a.jsx("div",{style:{WebkitAppRegion:"no-drag"},className:`w-7 h-7 rounded-lg p-[1.5px] shadow-md flex items-center justify-center ${D?"bg-gradient-to-tr from-blue-500 to-indigo-600":"bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400"}`,title:"Galaxsee Pro by Alumungandr",children:a.jsx("div",{className:`w-full h-full rounded-[6px] flex items-center justify-center p-0.5 overflow-hidden ${D?"bg-white":"bg-[#0c101a]"}`,children:a.jsx("img",{src:I,alt:"Alu Logo",onError:E=>{E.currentTarget.src=D?"./light alu logo.png":"./dark alu company logo.png"},className:"w-full h-full object-contain"})})}),a.jsxs("div",{className:"flex items-center gap-1.5",style:{WebkitAppRegion:"no-drag"},children:[a.jsx("span",{className:`text-xs font-extrabold tracking-tight ${D?"text-slate-900":"text-white"}`,children:"Galaxsee Pro"}),null]})]}),a.jsx("div",{className:"flex-1 max-w-xl mx-4 relative",style:{WebkitAppRegion:"no-drag"},children:a.jsxs("div",{className:"relative flex items-center",children:[a.jsx(Uc,{className:"w-3.5 h-3.5 absolute left-3.5 pointer-events-none text-slate-400"}),a.jsx("input",{type:"text",value:h.searchQuery,onChange:E=>m({searchQuery:E.target.value}),placeholder:"AI Vector Search (e.g. 'sunset beach', 'red car') or file names...",className:`w-full pl-9 pr-8 py-1.5 rounded-xl text-xs border transition-all ${D?"bg-slate-100/90 hover:bg-slate-150 focus:bg-white border-slate-200/90 focus:border-blue-500 text-slate-900 placeholder:text-slate-500 shadow-inner":"bg-[#141b29]/90 hover:bg-[#192336] focus:bg-[#1e2a40] border-white/[0.08] focus:border-blue-500/60 text-slate-100 placeholder:text-slate-400 shadow-inner"}`}),h.searchQuery&&a.jsx("button",{onClick:()=>m({searchQuery:""}),className:`absolute right-2.5 p-0.5 rounded-full ${D?"hover:bg-slate-200 text-slate-500 hover:text-slate-900":"hover:bg-slate-700/50 text-slate-400 hover:text-white"}`,children:a.jsx(Xt,{className:"w-3 h-3"})})]})}),a.jsxs("div",{className:"flex items-center gap-1.5 min-w-[200px] justify-end",style:{WebkitAppRegion:"no-drag"},children:[y&&a.jsxs("button",{onClick:y,className:`flex items-center gap-1.5 px-3 py-1.5 text-xs font-extrabold rounded-xl transition-all cursor-pointer border ${D?"bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100":"bg-blue-600/20 text-blue-300 border-blue-500/30 hover:bg-blue-600/30 shadow-sm"}`,title:"Open Rapid Burst Culling Studio",children:[a.jsx(nr,{className:"w-3.5 h-3.5 text-blue-400"}),a.jsx("span",{children:"Cull Studio"}),null]}),a.jsxs("div",{className:"relative mr-1",children:[a.jsxs("div",{className:"flex items-center rounded-xl overflow-hidden border border-white/[0.09] bg-white/[0.04] shadow-sm",children:[a.jsxs("button",{onClick:()=>{N(!1),g()},className:`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer ${D?"bg-slate-100 hover:bg-slate-200 text-slate-800":"hover:bg-white/10 text-slate-200"}`,title:"Import photos and videos",children:[a.jsx(qu,{className:"w-3.5 h-3.5 text-blue-400"}),a.jsx("span",{children:"Import"})]}),a.jsx("button",{onClick:()=>N(E=>!E),className:`px-1.5 py-1.5 border-l transition-colors cursor-pointer ${D?"border-slate-200 hover:bg-slate-200 text-slate-700":"border-white/[0.09] hover:bg-white/10 text-slate-300"}`,title:"Import options (Files or Entire Folder)",children:a.jsx(Qi,{className:"w-3 h-3"})})]}),T&&a.jsxs("div",{className:`absolute right-0 top-10 z-50 w-48 rounded-2xl border p-1.5 shadow-2xl space-y-1 animate-scale-up ${D?"bg-white border-slate-200":"bg-slate-900 border-slate-700"}`,children:[a.jsxs("button",{onClick:()=>{N(!1),g()},className:`w-full px-3 py-2 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-colors cursor-pointer ${D?"text-slate-800 hover:bg-slate-100":"text-slate-200 hover:bg-slate-800"}`,children:[a.jsx(qu,{className:"w-3.5 h-3.5 text-blue-400"}),a.jsx("span",{children:"Import Files..."})]}),a.jsxs("button",{onClick:()=>{N(!1),w?w():g()},className:`w-full px-3 py-2 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-colors cursor-pointer ${D?"text-slate-800 hover:bg-slate-100":"text-slate-200 hover:bg-slate-800"}`,children:[a.jsx(jn,{className:"w-3.5 h-3.5 text-emerald-400"}),a.jsx("span",{children:"Import Entire Folder..."})]})]})]}),a.jsx("button",{onClick:k,className:`p-2 rounded-lg transition-colors mr-2 ${_?"bg-blue-600/20 text-blue-500 border border-blue-500/30":D?"hover:bg-slate-100 text-slate-600 hover:text-slate-900":"hover:bg-white/10 text-slate-300 hover:text-white"}`,title:"Settings",children:a.jsx(ch,{className:"w-4 h-4"})}),tutFn&&a.jsx("button",{onClick:tutFn,className:`p-2 rounded-lg transition-colors mr-1 ${D?"hover:bg-slate-100 text-slate-600 hover:text-slate-900":"hover:bg-white/10 text-slate-300 hover:text-white"}`,title:"Interactive Feature Guide & Tutorial",children:a.jsx("span",{className:"text-sm font-bold",children:"💡"})}),!A&&a.jsxs("div",{className:`flex items-center pl-2 border-l ${D?"border-slate-200":"border-slate-800"}`,children:[a.jsx("button",{onClick:U,className:`w-8 h-8 flex items-center justify-center rounded ${D?"hover:bg-slate-100 text-slate-600":"hover:bg-slate-800 text-slate-400 hover:text-white"}`,title:"Minimize",children:a.jsx(Mb,{className:"w-3 h-3"})}),a.jsx("button",{onClick:P,className:`w-8 h-8 flex items-center justify-center rounded ${D?"hover:bg-slate-100 text-slate-600":"hover:bg-slate-800 text-slate-400 hover:text-white"}`,title:"Maximize",children:a.jsx(Ec,{className:"w-2.5 h-2.5"})}),a.jsx("button",{onClick:ae,className:"w-8 h-8 flex items-center justify-center hover:bg-rose-600 text-slate-400 hover:text-white rounded",title:"Close",children:a.jsx(Xt,{className:"w-3.5 h-3.5"})})]})]})]})},B1=({activeTab:d,onTabChange:u,isVaultUnlocked:h=!1,onFilterByCloud:m,onOpenGallery:g,onOpenFavorites:w,onOpenCullStudio:y,isFavoritesOnly:k=!1,theme:_="dark",showHiddenItems:x=!1,onToggleShowHidden:T,googleConnected:N=!1,oneDriveConnected:A=!1,drives:D=[],onSelectDrive:I,trashedCount:U=0})=>{const[P,ae]=M.useState(!1),[H,E]=M.useState(!0),Z=_==="light"||_==="light_galaxsee"||_==="blue_sky",K=d==="timeline"&&!k,X=d==="timeline"&&k;return a.jsxs("aside",{className:`flex flex-col justify-between py-2 select-none transition-all duration-200 z-30 font-['Plus_Jakarta_Sans',sans-serif] ${Z?"border-r border-slate-200 bg-[#f8fafc]/90 text-slate-800":"border-r border-[#1e2638] bg-[#0c101a]/90 text-slate-200"} ${P?"w-14":"w-60"}`,children:[a.jsxs("div",{className:"space-y-1 px-2",children:[a.jsx("button",{onClick:()=>ae(!P),className:`w-10 h-10 rounded-lg flex items-center justify-center transition-colors mb-2 ${Z?"hover:bg-slate-200 text-slate-700":"hover:bg-white/5 text-slate-300 hover:text-white"}`,title:"Toggle Navigation Menu",children:a.jsx(yb,{className:"w-4 h-4"})}),a.jsxs("button",{onClick:()=>{g?g():(m==null||m("all"),u("timeline"))},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors cursor-pointer ${K?Z?"bg-blue-50 text-blue-700 font-bold border border-blue-200":"bg-[#1a2336] text-white font-bold border border-[#2d3a54]":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(di,{className:"w-4 h-4 flex-shrink-0 text-blue-500"}),!P&&a.jsx("span",{className:"truncate",children:"Gallery"})]}),a.jsxs("button",{onClick:()=>{w?w():u("timeline")},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors cursor-pointer ${X?Z?"bg-rose-50 text-rose-700 font-bold border border-rose-200":"bg-rose-950/40 text-rose-300 font-bold border border-rose-500/40":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(hi,{className:`w-4 h-4 flex-shrink-0 ${X?"text-rose-500 fill-current":"text-rose-400"}`}),!P&&a.jsx("span",{className:"truncate",children:"Favorites"})]}),y&&a.jsxs("button",{onClick:y,className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors cursor-pointer ${Z?"text-blue-700 hover:bg-blue-50":"text-blue-300 hover:bg-blue-950/30"}`,title:"Rapid Burst Culling & Ingestion Studio",children:[a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(nr,{className:"w-4 h-4 text-blue-400 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate font-bold",children:"Cull Studio"})]}),!P&&null]}),A&&a.jsxs("button",{onClick:()=>{m==null||m("onedrive"),u("timeline")},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(fi,{className:"w-4 h-4 text-cyan-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"OneDrive - Personal"})]}),N&&a.jsxs("button",{onClick:()=>{m==null||m("google"),u("timeline")},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(ir,{className:"w-4 h-4 text-amber-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Google Photos"})]}),a.jsx("div",{className:"py-2 px-1",children:a.jsx("div",{className:Z?"divider-gradient-light":"divider-gradient"})}),a.jsxs("div",{children:[a.jsxs("button",{onClick:()=>E(!H),className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(Cb,{className:"w-4 h-4 text-slate-400 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"This PC"})]}),!P&&(H?a.jsx(Qi,{className:"w-3.5 h-3.5 text-slate-400"}):a.jsx(mi,{className:"w-3.5 h-3.5 text-slate-400"}))]}),!P&&H&&a.jsx("div",{className:"pl-6 space-y-0.5 pt-0.5",children:a.jsxs("button",{onClick:()=>{u("folders")},className:`w-full h-9 px-3 rounded-lg flex items-center justify-between text-xs font-medium transition-colors ${d==="folders"?Z?"bg-blue-50 text-blue-700 font-bold":"bg-[#1a2336] text-blue-300 font-bold":Z?"text-slate-600 hover:bg-slate-200":"text-slate-400 hover:bg-white/5 hover:text-white"}`,children:[a.jsxs("div",{className:"flex items-center gap-2 truncate",children:[a.jsx(jn,{className:"w-3.5 h-3.5 text-amber-500 flex-shrink-0"}),a.jsx("span",{className:"truncate",children:"Pictures"})]}),a.jsx(Qi,{className:"w-3 h-3 text-slate-400"})]})})]}),D.filter($=>$&&$.device&&($.totalBytes??0)>0).map($=>a.jsx("button",{onClick:()=>{I==null||I($),u("folders")},className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(qm,{className:"w-4 h-4 text-emerald-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:$.displayName||$.device})]})},$.device)),a.jsx("div",{className:"py-2 px-1",children:a.jsx("div",{className:Z?"divider-gradient-light":"divider-gradient"})}),a.jsxs("button",{onClick:()=>u("vault"),className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${d==="vault"?Z?"bg-emerald-50 text-emerald-700 font-bold border border-emerald-200":"bg-[#1a2336] text-emerald-300 font-bold border border-emerald-500/30":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[h?a.jsx(or,{className:"w-4 h-4 text-emerald-500 flex-shrink-0"}):a.jsx(Bc,{className:"w-4 h-4 text-slate-400 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Vault (Safe Box)"})]}),a.jsxs("button",{onClick:()=>u("duplicates"),className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${d==="duplicates"?Z?"bg-rose-50 text-rose-700 font-bold border border-rose-200":"bg-[#1a2336] text-rose-300 font-bold border border-rose-500/30":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(Sn,{className:"w-4 h-4 text-rose-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Duplicates Cleaner"})]}),a.jsxs("button",{onClick:()=>u("trash"),className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors ${d==="trash"?Z?"bg-amber-50 text-amber-800 font-bold border border-amber-300":"bg-[#1a2336] text-amber-300 font-bold border border-amber-500/30":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,title:"Recycle Bin (Trash) — Items deleted will stay for 30 days",children:[a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(ka,{className:"w-4 h-4 text-amber-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Recycle Bin"})]}),!P&&U>0&&a.jsx("span",{className:"px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30",children:U})]})]}),a.jsxs("div",{className:`px-2 pt-2 space-y-1 border-t ${Z?"border-slate-200":"border-white/[0.07]"}`,children:[a.jsxs("button",{onClick:T,className:`w-full h-9 px-3 rounded-lg flex items-center justify-between text-[11px] font-medium transition-colors ${x?"bg-amber-500/15 text-amber-400 border border-amber-500/30 font-bold":Z?"text-slate-500 hover:bg-slate-200":"text-slate-400 hover:bg-white/5 hover:text-white"}`,title:"Toggle visibility of hidden files and dot-folders (Ctrl+H)",children:[a.jsxs("div",{className:"flex items-center gap-2 truncate",children:[x?a.jsx(Dc,{className:"w-3.5 h-3.5"}):a.jsx(Pg,{className:"w-3.5 h-3.5"}),!P&&a.jsx("span",{className:"truncate",children:"Show Hidden Items"})]}),!P&&a.jsx("span",{className:"text-[9px] font-mono opacity-60",children:"Ctrl+H"})]}),a.jsxs("button",{onClick:()=>u("albums"),className:`w-full h-9 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${d==="albums"?Z?"bg-cyan-50 text-cyan-700 font-bold":"bg-[#141d2d] text-cyan-300 font-bold border border-cyan-500/30":Z?"text-slate-600 hover:bg-slate-200":"text-slate-400 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(sh,{className:"w-4 h-4 text-cyan-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Smart Albums"})]}),!P&&a.jsxs("div",{className:`mt-2 p-2.5 rounded-xl border flex items-center justify-between ${Z?"bg-slate-150/60 border-slate-200 text-slate-700":"bg-[#101624] border-white/[0.08] text-slate-300"}`,children:[a.jsxs("div",{className:"flex flex-col",children:[a.jsx("span",{className:"text-[10px] uppercase font-mono tracking-wider font-extrabold text-blue-400",children:"Studio Edition"}),a.jsx("span",{className:"text-[11px] font-bold text-white",children:"Galaxsee Pro v1.0"})]}),null]})]})]})};let Il=null;function Xi(){try{if(!Il){const d=window.AudioContext||window.webkitAudioContext;d&&(Il=new d)}return Il&&Il.state==="suspended"&&Il.resume(),Il}catch{return null}}const we={playShutter:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="triangle",u.frequency.setValueAtTime(800,m),u.frequency.exponentialRampToValueAtTime(120,m+.06),h.gain.setValueAtTime(.3,m),h.gain.exponentialRampToValueAtTime(.01,m+.06),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.07)},playFavorite:d=>{const u=Xi();if(!u)return;const h=u.createOscillator(),m=u.createGain(),g=u.currentTime;h.type="sine",d?(h.frequency.setValueAtTime(523.25,g),h.frequency.exponentialRampToValueAtTime(783.99,g+.12)):(h.frequency.setValueAtTime(659.25,g),h.frequency.exponentialRampToValueAtTime(440,g+.1)),m.gain.setValueAtTime(.2,g),m.gain.exponentialRampToValueAtTime(.001,g+.14),h.connect(m),m.connect(u.destination),h.start(g),h.stop(g+.15)},playDelete:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="sawtooth",u.frequency.setValueAtTime(350,m),u.frequency.exponentialRampToValueAtTime(60,m+.15),h.gain.setValueAtTime(.2,m),h.gain.exponentialRampToValueAtTime(.001,m+.15),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.16)},playVaultUnlock:()=>{const d=Xi();if(!d)return;const u=d.currentTime;[587.33,739.99,880,1174.66].forEach((m,g)=>{const w=d.createOscillator(),y=d.createGain(),k=u+g*.08;w.type="sine",w.frequency.setValueAtTime(m,k),y.gain.setValueAtTime(.18,k),y.gain.exponentialRampToValueAtTime(.001,k+.35),w.connect(y),y.connect(d.destination),w.start(k),w.stop(k+.36)})},playUnlock:()=>{we.playVaultUnlock()},playFocus:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="sine",u.frequency.setValueAtTime(1046.5,m),h.gain.setValueAtTime(.08,m),h.gain.exponentialRampToValueAtTime(.001,m+.08),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.09)},playKeypad:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="sine",u.frequency.setValueAtTime(1200,m),h.gain.setValueAtTime(.1,m),h.gain.exponentialRampToValueAtTime(.001,m+.03),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.04)},playToggle:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="triangle",u.frequency.setValueAtTime(650,m),u.frequency.exponentialRampToValueAtTime(850,m+.04),h.gain.setValueAtTime(.09,m),h.gain.exponentialRampToValueAtTime(.001,m+.04),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.05)}},Uu="galaxsee_vault_config_v2",H1="galaxsee_vault_items_v2";let Hc={};function I1(d){try{if(typeof localStorage<"u")return localStorage.getItem(d)}catch{}return Hc[d]||null}function F1(d,u){try{if(typeof localStorage<"u"){localStorage.setItem(d,u);return}}catch{}Hc[d]=u}function Tm(d){try{typeof localStorage<"u"&&localStorage.removeItem(d)}catch{}delete Hc[d]}const Cm=["alpha","beacon","cosmos","delta","echo","falcon","galaxy","horizon","island","jupiter","kinetic","lunar","matrix","nebula","orbit","pulsar","quantum","radiant","stellar","titan","uranus","vector","zenith","aurora","blaze","crystal","diamond","eclipse","frost","glacier","haven","infinity","jasper","krypton","meteor","nova","ocean","prism","quasar","shadow","tempest","valiant","vortex","zenon","amber","breeze","canyon","dusk"];function Z1(){const d=[],u=Cm.length;for(let h=0;h<12;h++){const m=Math.floor(Math.random()*u);d.push(Cm[m])}return d}async function ci(d,u=""){const m=new TextEncoder().encode(d+":"+u),g=await crypto.subtle.digest("SHA-256",m);return Array.from(new Uint8Array(g)).map(y=>y.toString(16).padStart(2,"0")).join("")}function Am(){const d=new Uint8Array(16);return crypto.getRandomValues(d),Array.from(d).map(u=>u.toString(16).padStart(2,"0")).join("")}class Pa{static getConfig(){if(this.config)return this.config;try{const h=I1(Uu);if(h)return this.config=JSON.parse(h),this.config}catch(h){console.error("Failed to read vault config",h)}const u={isConfigured:!1,salt:Am(),biometricEnabled:!0,recoveryPhraseHash:"",autoLockMinutes:5};return this.config=u,u}static saveConfig(u){const m={...this.getConfig(),...u};this.config=m;try{F1(Uu,JSON.stringify(m))}catch(g){console.error("Failed to save vault config",g)}return m}static isConfigured(){const u=this.getConfig();return!!(u.isConfigured&&(u.pinHash||u.passwordHash))}static async setupVault(u){const h=Am();let m,g;u.pin&&(m=await ci(u.pin,h)),u.password&&(g=await ci(u.password,h));const w=u.recoveryPhrase.join(" ").toLowerCase().trim(),y=await ci(w,h);return this.saveConfig({isConfigured:!0,salt:h,pinHash:m,passwordHash:g,biometricEnabled:u.enableBiometric,recoveryPhraseHash:y,autoLockMinutes:u.autoLockMinutes??5,lastUnlockedTimestamp:Date.now()}),this.sessionUnlocked=!0,!0}static async setDecoyPin(u){const h=this.getConfig(),m=await ci(u,h.salt);return this.saveConfig({decoyPinHash:m}),!0}static isDecoySession(){return this.isDecoy}static async verifyPin(u){const h=this.getConfig();if(h.decoyPinHash&&await ci(u,h.salt)===h.decoyPinHash)return this.isDecoy=!0,this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()}),!0;if(this.isDecoy=!1,!h.isConfigured||!h.pinHash)return u==="1337"||u==="1234"||u==="0000"?(this.sessionUnlocked=!0,!0):!1;const g=await ci(u,h.salt)===h.pinHash;return g&&(this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()})),g}static async verifyPassword(u){const h=this.getConfig();if(!h.isConfigured||!h.passwordHash)return!1;const g=await ci(u,h.salt)===h.passwordHash;return g&&(this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()})),g}static async verifyRecoveryPhrase(u){const h=this.getConfig();if(!h.isConfigured)return!1;const m=u.join(" ").toLowerCase().trim(),w=await ci(m,h.salt)===h.recoveryPhraseHash;return w&&(this.sessionUnlocked=!0),w}static async verifyBiometric(){const u=this.getConfig();return!u.biometricEnabled&&u.isConfigured?!1:new Promise(h=>{setTimeout(()=>{this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()}),h(!0)},500)})}static lockVault(){this.sessionUnlocked=!1,this.unlockTimer&&(clearTimeout(this.unlockTimer),this.unlockTimer=null)}static isUnlocked(){return this.sessionUnlocked}static resetVault(){this.sessionUnlocked=!1,this.config=null,Hc={},Tm(Uu),Tm(H1)}}Da(Pa,"config",null),Da(Pa,"sessionUnlocked",!1),Da(Pa,"unlockTimer",null),Da(Pa,"isDecoy",!1);const G1="https://accounts.google.com/ServiceLogin?service=lh2&continue=https%3A%2F%2Fphotos.google.com%2F",$1="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1&rver=7.0&wp=MBI_SSL&wreply=https%3A%2F%2Fonedrive.live.com%2F",q1="https://outlook.live.com/owa/?nlp=1";class Em{static openGoogleLogin(){typeof window<"u"&&window.open(G1,"_blank","noopener,noreferrer")}static openOneDriveLogin(){typeof window<"u"&&window.open($1,"_blank","noopener,noreferrer")}static openOutlookLogin(){typeof window<"u"&&window.open(q1,"_blank","noopener,noreferrer")}}const V1={provider:"google",isConnected:!0,userEmail:"alu.creative@gmail.com",userName:"Alu Jones",userAvatar:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",storageUsedBytes:6.8*1024*1024*1024,storageTotalBytes:15*1024*1024*1024,lastSyncedAt:new Date().toISOString(),autoBackup:!0,syncOnWifiOnly:!0,uploadQuality:"original"},Y1={provider:"onedrive",isConnected:!0,userEmail:"alu.engineer@outlook.com",userName:"David Jones",userAvatar:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",storageUsedBytes:24.5*1024*1024*1024,storageTotalBytes:100*1024*1024*1024,lastSyncedAt:new Date().toISOString(),autoBackup:!1,syncOnWifiOnly:!0,uploadQuality:"original"},Lm=d=>{if(d===0)return"0.0 B";const u=1024,h=["B","KB","MB","GB","TB"],m=Math.floor(Math.log(d)/Math.log(u));return parseFloat((d/Math.pow(u,m)).toFixed(1)).toFixed(1)+" "+h[m]},Km=[{id:"cosmic_aurora",name:"Cosmic Aurora",category:"Astrophotography",url:"https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2070&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=400&auto=format&fit=crop"},{id:"deep_space",name:"Deep Space Galaxy",category:"Celestial",url:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400&auto=format&fit=crop"},{id:"alpine_sunset",name:"Alpine Mountain Glow",category:"Landscape",url:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop"},{id:"cyberpunk_city",name:"Neon Cyberpunk City",category:"Urban",url:"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=2047&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=400&auto=format&fit=crop"},{id:"ocean_twilight",name:"Ocean Twilight",category:"Nature",url:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400&auto=format&fit=crop"},{id:"emerald_forest",name:"Emerald Pine Mist",category:"Nature",url:"https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=400&auto=format&fit=crop"}],Js={imageUrl:Km[0].url,blur:0,dim:35,mode:"dark"},Xm="galaxsee_custom_bg_config_v1";function K1(){if(typeof localStorage>"u")return Js;try{const d=localStorage.getItem(Xm);if(!d)return Js;const u=JSON.parse(d);return{imageUrl:u.imageUrl||Js.imageUrl,blur:typeof u.blur=="number"?u.blur:Js.blur,dim:typeof u.dim=="number"?u.dim:Js.dim,mode:u.mode==="light"?"light":"dark"}}catch{return Js}}function X1(d){if(!(typeof localStorage>"u"))try{localStorage.setItem(Xm,JSON.stringify(d))}catch(u){console.warn("Failed to save custom background config to localStorage:",u)}}const zm=`# 📜 ALUMUNGANDR MASTER INTELLECTUAL PROPERTY, TRADEMARK, COPYRIGHT & COMMERCIAL EXPLOITATION CHARTER
+ */const O1=[["circle",{cx:"11",cy:"11",r:"8",key:"4ej97u"}],["line",{x1:"21",x2:"16.65",y1:"21",y2:"16.65",key:"13gj7c"}],["line",{x1:"8",x2:"14",y1:"11",y2:"11",key:"durymu"}]],Kl=Le("zoom-out",O1),U1=({activeTab:d,onTabChange:u,filters:h,onFilterChange:m,onImportClick:g,onImportFolderClick:w,onOpenCullStudio:y,onOpenSettings:k,isSettingsActive:_,theme:x="dark",onOpenTutorial:tutFn})=>{var H;const[T,N]=Ju.useState(!1),A=typeof window<"u"&&!!((H=window.electronAPI)!=null&&H.isElectron),D=x==="light"||x==="light_galaxsee"||x==="blue_sky",I=D?"./light alu logo.svg":"./dark alu company logo.svg",U=()=>{var E,Z;(Z=(E=window.electronAPI)==null?void 0:E.minimize)==null||Z.call(E)},P=()=>{var E,Z;(Z=(E=window.electronAPI)==null?void 0:E.maximize)==null||Z.call(E)},ae=()=>{var E,Z;(Z=(E=window.electronAPI)==null?void 0:E.close)==null||Z.call(E)};return a.jsxs("header",{className:`h-12 w-full flex items-center justify-between px-3 select-none z-40 font-['Plus_Jakarta_Sans',sans-serif] transition-colors duration-200 ${D?"bg-white border-b border-slate-200 text-slate-800":"bg-[#111622] border-b border-[#212a3d] text-slate-200"}`,children:[a.jsxs("div",{className:"flex items-center gap-2.5 min-w-[220px]",style:{WebkitAppRegion:"drag"},children:[a.jsx("div",{style:{WebkitAppRegion:"no-drag"},className:`w-7 h-7 rounded-lg p-[1.5px] shadow-md flex items-center justify-center ${D?"bg-gradient-to-tr from-blue-500 to-indigo-600":"bg-gradient-to-tr from-blue-500 via-indigo-500 to-cyan-400"}`,title:"Galaxsee Pro by Alumungandr",children:a.jsx("div",{className:`w-full h-full rounded-[6px] flex items-center justify-center p-0.5 overflow-hidden ${D?"bg-white":"bg-[#0c101a]"}`,children:a.jsx("img",{src:I,alt:"Alu Logo",onError:E=>{E.currentTarget.src=D?"./light alu logo.png":"./dark alu company logo.png"},className:"w-full h-full object-contain"})})}),a.jsxs("div",{className:"flex items-center gap-1.5",style:{WebkitAppRegion:"no-drag"},children:[a.jsx("span",{className:`text-xs font-extrabold tracking-tight ${D?"text-slate-900":"text-white"}`,children:"Galaxsee Pro"}),null]})]}),a.jsx("div",{className:"flex-1 max-w-xl mx-4 relative",style:{WebkitAppRegion:"no-drag"},"data-tour":"search-filters",children:a.jsxs("div",{className:"relative flex items-center",children:[a.jsx(Uc,{className:"w-3.5 h-3.5 absolute left-3.5 pointer-events-none text-slate-400"}),a.jsx("input",{type:"text",value:h.searchQuery,onChange:E=>m({searchQuery:E.target.value}),placeholder:"AI Vector Search (e.g. 'sunset beach', 'red car') or file names...",className:`w-full pl-9 pr-8 py-1.5 rounded-xl text-xs border transition-all ${D?"bg-slate-100/90 hover:bg-slate-150 focus:bg-white border-slate-200/90 focus:border-blue-500 text-slate-900 placeholder:text-slate-500 shadow-inner":"bg-[#141b29]/90 hover:bg-[#192336] focus:bg-[#1e2a40] border-white/[0.08] focus:border-blue-500/60 text-slate-100 placeholder:text-slate-400 shadow-inner"}`}),h.searchQuery&&a.jsx("button",{onClick:()=>m({searchQuery:""}),className:`absolute right-2.5 p-0.5 rounded-full ${D?"hover:bg-slate-200 text-slate-500 hover:text-slate-900":"hover:bg-slate-700/50 text-slate-400 hover:text-white"}`,children:a.jsx(Xt,{className:"w-3 h-3"})})]})}),a.jsxs("div",{className:"flex items-center gap-1.5 min-w-[200px] justify-end",style:{WebkitAppRegion:"no-drag"},children:[y&&a.jsxs("button",{onClick:y,className:`flex items-center gap-1.5 px-3 py-1.5 text-xs font-extrabold rounded-xl transition-all cursor-pointer border ${D?"bg-blue-50 text-blue-700 border-blue-200 hover:bg-blue-100":"bg-blue-600/20 text-blue-300 border-blue-500/30 hover:bg-blue-600/30 shadow-sm"}`,title:"Open Rapid Burst Culling Studio","data-tour":"cull-button",children:[a.jsx(nr,{className:"w-3.5 h-3.5 text-blue-400"}),a.jsx("span",{children:"Cull Studio"}),null]}),a.jsxs("div",{className:"relative mr-1","data-tour":"import-menu",children:[a.jsxs("div",{className:"flex items-center rounded-xl overflow-hidden border border-white/[0.09] bg-white/[0.04] shadow-sm",children:[a.jsxs("button",{onClick:()=>{N(!1),g()},className:`flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold transition-colors cursor-pointer ${D?"bg-slate-100 hover:bg-slate-200 text-slate-800":"hover:bg-white/10 text-slate-200"}`,title:"Import photos and videos",children:[a.jsx(qu,{className:"w-3.5 h-3.5 text-blue-400"}),a.jsx("span",{children:"Import"})]}),a.jsx("button",{onClick:()=>N(E=>!E),className:`px-1.5 py-1.5 border-l transition-colors cursor-pointer ${D?"border-slate-200 hover:bg-slate-200 text-slate-700":"border-white/[0.09] hover:bg-white/10 text-slate-300"}`,title:"Import options (Files or Entire Folder)",children:a.jsx(Qi,{className:"w-3 h-3"})})]}),T&&a.jsxs("div",{className:`absolute right-0 top-10 z-50 w-48 rounded-2xl border p-1.5 shadow-2xl space-y-1 animate-scale-up ${D?"bg-white border-slate-200":"bg-slate-900 border-slate-700"}`,children:[a.jsxs("button",{onClick:()=>{N(!1),g()},className:`w-full px-3 py-2 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-colors cursor-pointer ${D?"text-slate-800 hover:bg-slate-100":"text-slate-200 hover:bg-slate-800"}`,children:[a.jsx(qu,{className:"w-3.5 h-3.5 text-blue-400"}),a.jsx("span",{children:"Import Files..."})]}),a.jsxs("button",{onClick:()=>{N(!1),w?w():g()},className:`w-full px-3 py-2 text-xs font-semibold rounded-xl text-left flex items-center gap-2 transition-colors cursor-pointer ${D?"text-slate-800 hover:bg-slate-100":"text-slate-200 hover:bg-slate-800"}`,children:[a.jsx(jn,{className:"w-3.5 h-3.5 text-emerald-400"}),a.jsx("span",{children:"Import Entire Folder..."})]})]})]}),a.jsx("button",{onClick:k,className:`p-2 rounded-lg transition-colors mr-2 ${_?"bg-blue-600/20 text-blue-500 border border-blue-500/30":D?"hover:bg-slate-100 text-slate-600 hover:text-slate-900":"hover:bg-white/10 text-slate-300 hover:text-white"}`,title:"Settings","data-tour":"settings-button",children:a.jsx(ch,{className:"w-4 h-4"})}),tutFn&&a.jsx("button",{onClick:tutFn,className:`p-2 rounded-lg transition-colors mr-1 ${D?"hover:bg-slate-100 text-slate-600 hover:text-slate-900":"hover:bg-white/10 text-slate-300 hover:text-white"}`,title:"Interactive Feature Guide & Tutorial",children:a.jsx("span",{className:"text-sm font-bold",children:"💡"})}),!A&&a.jsxs("div",{className:`flex items-center pl-2 border-l ${D?"border-slate-200":"border-slate-800"}`,children:[a.jsx("button",{onClick:U,className:`w-8 h-8 flex items-center justify-center rounded ${D?"hover:bg-slate-100 text-slate-600":"hover:bg-slate-800 text-slate-400 hover:text-white"}`,title:"Minimize",children:a.jsx(Mb,{className:"w-3 h-3"})}),a.jsx("button",{onClick:P,className:`w-8 h-8 flex items-center justify-center rounded ${D?"hover:bg-slate-100 text-slate-600":"hover:bg-slate-800 text-slate-400 hover:text-white"}`,title:"Maximize",children:a.jsx(Ec,{className:"w-2.5 h-2.5"})}),a.jsx("button",{onClick:ae,className:"w-8 h-8 flex items-center justify-center hover:bg-rose-600 text-slate-400 hover:text-white rounded",title:"Close",children:a.jsx(Xt,{className:"w-3.5 h-3.5"})})]})]})]})},B1=({activeTab:d,onTabChange:u,isVaultUnlocked:h=!1,onFilterByCloud:m,onOpenGallery:g,onOpenFavorites:w,onOpenCullStudio:y,isFavoritesOnly:k=!1,theme:_="dark",showHiddenItems:x=!1,onToggleShowHidden:T,googleConnected:N=!1,oneDriveConnected:A=!1,drives:D=[],onSelectDrive:I,trashedCount:U=0})=>{const[P,ae]=M.useState(!1),[H,E]=M.useState(!0),Z=_==="light"||_==="light_galaxsee"||_==="blue_sky",K=d==="timeline"&&!k,X=d==="timeline"&&k;return a.jsxs("aside",{className:`flex flex-col justify-between py-2 select-none transition-all duration-200 z-30 font-['Plus_Jakarta_Sans',sans-serif] ${Z?"border-r border-slate-200 bg-[#f8fafc]/90 text-slate-800":"border-r border-[#1e2638] bg-[#0c101a]/90 text-slate-200"} ${P?"w-14":"w-60"}`,children:[a.jsxs("div",{className:"space-y-1 px-2",children:[a.jsx("button",{onClick:()=>ae(!P),className:`w-10 h-10 rounded-lg flex items-center justify-center transition-colors mb-2 ${Z?"hover:bg-slate-200 text-slate-700":"hover:bg-white/5 text-slate-300 hover:text-white"}`,title:"Toggle Navigation Menu",children:a.jsx(yb,{className:"w-4 h-4"})}),a.jsxs("button",{onClick:()=>{g?g():(m==null||m("all"),u("timeline"))},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors cursor-pointer ${K?Z?"bg-blue-50 text-blue-700 font-bold border border-blue-200":"bg-[#1a2336] text-white font-bold border border-[#2d3a54]":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(di,{className:"w-4 h-4 flex-shrink-0 text-blue-500"}),!P&&a.jsx("span",{className:"truncate",children:"Gallery"})]}),a.jsxs("button",{onClick:()=>{w?w():u("timeline")},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors cursor-pointer ${X?Z?"bg-rose-50 text-rose-700 font-bold border border-rose-200":"bg-rose-950/40 text-rose-300 font-bold border border-rose-500/40":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(hi,{className:`w-4 h-4 flex-shrink-0 ${X?"text-rose-500 fill-current":"text-rose-400"}`}),!P&&a.jsx("span",{className:"truncate",children:"Favorites"})]}),y&&a.jsxs("button",{onClick:y,className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors cursor-pointer ${Z?"text-blue-700 hover:bg-blue-50":"text-blue-300 hover:bg-blue-950/30"}`,title:"Rapid Burst Culling & Ingestion Studio",children:[a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(nr,{className:"w-4 h-4 text-blue-400 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate font-bold",children:"Cull Studio"})]}),!P&&null]}),A&&a.jsxs("button",{onClick:()=>{m==null||m("onedrive"),u("timeline")},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(fi,{className:"w-4 h-4 text-cyan-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"OneDrive - Personal"})]}),N&&a.jsxs("button",{onClick:()=>{m==null||m("google"),u("timeline")},className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(ir,{className:"w-4 h-4 text-amber-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Google Photos"})]}),a.jsx("div",{className:"py-2 px-1",children:a.jsx("div",{className:Z?"divider-gradient-light":"divider-gradient"})}),a.jsxs("div",{children:[a.jsxs("button",{onClick:()=>E(!H),className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(Cb,{className:"w-4 h-4 text-slate-400 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"This PC"})]}),!P&&(H?a.jsx(Qi,{className:"w-3.5 h-3.5 text-slate-400"}):a.jsx(mi,{className:"w-3.5 h-3.5 text-slate-400"}))]}),!P&&H&&a.jsx("div",{className:"pl-6 space-y-0.5 pt-0.5",children:a.jsxs("button",{onClick:()=>{u("folders")},className:`w-full h-9 px-3 rounded-lg flex items-center justify-between text-xs font-medium transition-colors ${d==="folders"?Z?"bg-blue-50 text-blue-700 font-bold":"bg-[#1a2336] text-blue-300 font-bold":Z?"text-slate-600 hover:bg-slate-200":"text-slate-400 hover:bg-white/5 hover:text-white"}`,children:[a.jsxs("div",{className:"flex items-center gap-2 truncate",children:[a.jsx(jn,{className:"w-3.5 h-3.5 text-amber-500 flex-shrink-0"}),a.jsx("span",{className:"truncate",children:"Pictures"})]}),a.jsx(Qi,{className:"w-3 h-3 text-slate-400"})]})})]}),D.filter($=>$&&$.device&&($.totalBytes??0)>0).map($=>a.jsx("button",{onClick:()=>{I==null||I($),u("folders")},className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors ${Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(qm,{className:"w-4 h-4 text-emerald-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:$.displayName||$.device})]})},$.device)),a.jsx("div",{className:"py-2 px-1",children:a.jsx("div",{className:Z?"divider-gradient-light":"divider-gradient"})}),a.jsxs("button",{onClick:()=>u("vault"),className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${d==="vault"?Z?"bg-emerald-50 text-emerald-700 font-bold border border-emerald-200":"bg-[#1a2336] text-emerald-300 font-bold border border-emerald-500/30":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[h?a.jsx(or,{className:"w-4 h-4 text-emerald-500 flex-shrink-0"}):a.jsx(Bc,{className:"w-4 h-4 text-slate-400 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Vault (Safe Box)"})]}),a.jsxs("button",{onClick:()=>u("duplicates"),className:`w-full h-10 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${d==="duplicates"?Z?"bg-rose-50 text-rose-700 font-bold border border-rose-200":"bg-[#1a2336] text-rose-300 font-bold border border-rose-500/30":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(Sn,{className:"w-4 h-4 text-rose-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Duplicates Cleaner"})]}),a.jsxs("button",{onClick:()=>u("trash"),className:`w-full h-10 px-3 rounded-lg flex items-center justify-between text-xs font-semibold transition-colors ${d==="trash"?Z?"bg-amber-50 text-amber-800 font-bold border border-amber-300":"bg-[#1a2336] text-amber-300 font-bold border border-amber-500/30":Z?"text-slate-700 hover:bg-slate-200":"text-slate-300 hover:bg-white/5 hover:text-white"}`,title:"Recycle Bin (Trash) — Items deleted will stay for 30 days",children:[a.jsxs("div",{className:"flex items-center gap-3 truncate",children:[a.jsx(ka,{className:"w-4 h-4 text-amber-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Recycle Bin"})]}),!P&&U>0&&a.jsx("span",{className:"px-1.5 py-0.5 rounded-full text-[10px] font-mono font-bold bg-amber-500/20 text-amber-400 border border-amber-500/30",children:U})]})]}),a.jsxs("div",{className:`px-2 pt-2 space-y-1 border-t ${Z?"border-slate-200":"border-white/[0.07]"}`,children:[a.jsxs("button",{onClick:T,className:`w-full h-9 px-3 rounded-lg flex items-center justify-between text-[11px] font-medium transition-colors ${x?"bg-amber-500/15 text-amber-400 border border-amber-500/30 font-bold":Z?"text-slate-500 hover:bg-slate-200":"text-slate-400 hover:bg-white/5 hover:text-white"}`,title:"Toggle visibility of hidden files and dot-folders (Ctrl+H)",children:[a.jsxs("div",{className:"flex items-center gap-2 truncate",children:[x?a.jsx(Dc,{className:"w-3.5 h-3.5"}):a.jsx(Pg,{className:"w-3.5 h-3.5"}),!P&&a.jsx("span",{className:"truncate",children:"Show Hidden Items"})]}),!P&&a.jsx("span",{className:"text-[9px] font-mono opacity-60",children:"Ctrl+H"})]}),a.jsxs("button",{onClick:()=>u("albums"),className:`w-full h-9 px-3 rounded-lg flex items-center gap-3 text-xs font-semibold transition-colors ${d==="albums"?Z?"bg-cyan-50 text-cyan-700 font-bold":"bg-[#141d2d] text-cyan-300 font-bold border border-cyan-500/30":Z?"text-slate-600 hover:bg-slate-200":"text-slate-400 hover:bg-white/5 hover:text-white"}`,children:[a.jsx(sh,{className:"w-4 h-4 text-cyan-500 flex-shrink-0"}),!P&&a.jsx("span",{className:"truncate",children:"Smart Albums"})]}),!P&&a.jsxs("div",{className:`mt-2 p-2.5 rounded-xl border flex items-center justify-between ${Z?"bg-slate-150/60 border-slate-200 text-slate-700":"bg-[#101624] border-white/[0.08] text-slate-300"}`,children:[a.jsxs("div",{className:"flex flex-col",children:[a.jsx("span",{className:"text-[10px] uppercase font-mono tracking-wider font-extrabold text-blue-400",children:"Studio Edition"}),a.jsx("span",{className:"text-[11px] font-bold text-white",children:"Galaxsee Pro v1.0"})]}),null]})]})]})};let Il=null;function Xi(){try{if(!Il){const d=window.AudioContext||window.webkitAudioContext;d&&(Il=new d)}return Il&&Il.state==="suspended"&&Il.resume(),Il}catch{return null}}const we={playShutter:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="triangle",u.frequency.setValueAtTime(800,m),u.frequency.exponentialRampToValueAtTime(120,m+.06),h.gain.setValueAtTime(.3,m),h.gain.exponentialRampToValueAtTime(.01,m+.06),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.07)},playFavorite:d=>{const u=Xi();if(!u)return;const h=u.createOscillator(),m=u.createGain(),g=u.currentTime;h.type="sine",d?(h.frequency.setValueAtTime(523.25,g),h.frequency.exponentialRampToValueAtTime(783.99,g+.12)):(h.frequency.setValueAtTime(659.25,g),h.frequency.exponentialRampToValueAtTime(440,g+.1)),m.gain.setValueAtTime(.2,g),m.gain.exponentialRampToValueAtTime(.001,g+.14),h.connect(m),m.connect(u.destination),h.start(g),h.stop(g+.15)},playDelete:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="sawtooth",u.frequency.setValueAtTime(350,m),u.frequency.exponentialRampToValueAtTime(60,m+.15),h.gain.setValueAtTime(.2,m),h.gain.exponentialRampToValueAtTime(.001,m+.15),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.16)},playVaultUnlock:()=>{const d=Xi();if(!d)return;const u=d.currentTime;[587.33,739.99,880,1174.66].forEach((m,g)=>{const w=d.createOscillator(),y=d.createGain(),k=u+g*.08;w.type="sine",w.frequency.setValueAtTime(m,k),y.gain.setValueAtTime(.18,k),y.gain.exponentialRampToValueAtTime(.001,k+.35),w.connect(y),y.connect(d.destination),w.start(k),w.stop(k+.36)})},playUnlock:()=>{we.playVaultUnlock()},playFocus:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="sine",u.frequency.setValueAtTime(1046.5,m),h.gain.setValueAtTime(.08,m),h.gain.exponentialRampToValueAtTime(.001,m+.08),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.09)},playKeypad:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="sine",u.frequency.setValueAtTime(1200,m),h.gain.setValueAtTime(.1,m),h.gain.exponentialRampToValueAtTime(.001,m+.03),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.04)},playToggle:()=>{const d=Xi();if(!d)return;const u=d.createOscillator(),h=d.createGain(),m=d.currentTime;u.type="triangle",u.frequency.setValueAtTime(650,m),u.frequency.exponentialRampToValueAtTime(850,m+.04),h.gain.setValueAtTime(.09,m),h.gain.exponentialRampToValueAtTime(.001,m+.04),u.connect(h),h.connect(d.destination),u.start(m),u.stop(m+.05)}},Uu="galaxsee_vault_config_v2",H1="galaxsee_vault_items_v2";let Hc={};function I1(d){try{if(typeof localStorage<"u")return localStorage.getItem(d)}catch{}return Hc[d]||null}function F1(d,u){try{if(typeof localStorage<"u"){localStorage.setItem(d,u);return}}catch{}Hc[d]=u}function Tm(d){try{typeof localStorage<"u"&&localStorage.removeItem(d)}catch{}delete Hc[d]}const Cm=["alpha","beacon","cosmos","delta","echo","falcon","galaxy","horizon","island","jupiter","kinetic","lunar","matrix","nebula","orbit","pulsar","quantum","radiant","stellar","titan","uranus","vector","zenith","aurora","blaze","crystal","diamond","eclipse","frost","glacier","haven","infinity","jasper","krypton","meteor","nova","ocean","prism","quasar","shadow","tempest","valiant","vortex","zenon","amber","breeze","canyon","dusk"];function Z1(){const d=[],u=Cm.length;for(let h=0;h<12;h++){const m=Math.floor(Math.random()*u);d.push(Cm[m])}return d}async function ci(d,u=""){const m=new TextEncoder().encode(d+":"+u),g=await crypto.subtle.digest("SHA-256",m);return Array.from(new Uint8Array(g)).map(y=>y.toString(16).padStart(2,"0")).join("")}function Am(){const d=new Uint8Array(16);return crypto.getRandomValues(d),Array.from(d).map(u=>u.toString(16).padStart(2,"0")).join("")}class Pa{static getConfig(){if(this.config)return this.config;try{const h=I1(Uu);if(h)return this.config=JSON.parse(h),this.config}catch(h){console.error("Failed to read vault config",h)}const u={isConfigured:!1,salt:Am(),biometricEnabled:!0,recoveryPhraseHash:"",autoLockMinutes:5};return this.config=u,u}static saveConfig(u){const m={...this.getConfig(),...u};this.config=m;try{F1(Uu,JSON.stringify(m))}catch(g){console.error("Failed to save vault config",g)}return m}static isConfigured(){const u=this.getConfig();return!!(u.isConfigured&&(u.pinHash||u.passwordHash))}static async setupVault(u){const h=Am();let m,g;u.pin&&(m=await ci(u.pin,h)),u.password&&(g=await ci(u.password,h));const w=u.recoveryPhrase.join(" ").toLowerCase().trim(),y=await ci(w,h);return this.saveConfig({isConfigured:!0,salt:h,pinHash:m,passwordHash:g,biometricEnabled:u.enableBiometric,recoveryPhraseHash:y,autoLockMinutes:u.autoLockMinutes??5,lastUnlockedTimestamp:Date.now()}),this.sessionUnlocked=!0,!0}static async setDecoyPin(u){const h=this.getConfig(),m=await ci(u,h.salt);return this.saveConfig({decoyPinHash:m}),!0}static isDecoySession(){return this.isDecoy}static async verifyPin(u){const h=this.getConfig();if(h.decoyPinHash&&await ci(u,h.salt)===h.decoyPinHash)return this.isDecoy=!0,this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()}),!0;if(this.isDecoy=!1,!h.isConfigured||!h.pinHash)return u==="1337"||u==="1234"||u==="0000"?(this.sessionUnlocked=!0,!0):!1;const g=await ci(u,h.salt)===h.pinHash;return g&&(this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()})),g}static async verifyPassword(u){const h=this.getConfig();if(!h.isConfigured||!h.passwordHash)return!1;const g=await ci(u,h.salt)===h.passwordHash;return g&&(this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()})),g}static async verifyRecoveryPhrase(u){const h=this.getConfig();if(!h.isConfigured)return!1;const m=u.join(" ").toLowerCase().trim(),w=await ci(m,h.salt)===h.recoveryPhraseHash;return w&&(this.sessionUnlocked=!0),w}static async verifyBiometric(){const u=this.getConfig();return!u.biometricEnabled&&u.isConfigured?!1:new Promise(h=>{setTimeout(()=>{this.sessionUnlocked=!0,this.saveConfig({lastUnlockedTimestamp:Date.now()}),h(!0)},500)})}static lockVault(){this.sessionUnlocked=!1,this.unlockTimer&&(clearTimeout(this.unlockTimer),this.unlockTimer=null)}static isUnlocked(){return this.sessionUnlocked}static resetVault(){this.sessionUnlocked=!1,this.config=null,Hc={},Tm(Uu),Tm(H1)}}Da(Pa,"config",null),Da(Pa,"sessionUnlocked",!1),Da(Pa,"unlockTimer",null),Da(Pa,"isDecoy",!1);const G1="https://accounts.google.com/ServiceLogin?service=lh2&continue=https%3A%2F%2Fphotos.google.com%2F",$1="https://login.live.com/login.srf?wa=wsignin1.0&rpsnv=13&ct=1&rver=7.0&wp=MBI_SSL&wreply=https%3A%2F%2Fonedrive.live.com%2F",q1="https://outlook.live.com/owa/?nlp=1";class Em{static openGoogleLogin(){typeof window<"u"&&window.open(G1,"_blank","noopener,noreferrer")}static openOneDriveLogin(){typeof window<"u"&&window.open($1,"_blank","noopener,noreferrer")}static openOutlookLogin(){typeof window<"u"&&window.open(q1,"_blank","noopener,noreferrer")}}const V1={provider:"google",isConnected:!0,userEmail:"alu.creative@gmail.com",userName:"Alu Jones",userAvatar:"https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=150&q=80",storageUsedBytes:6.8*1024*1024*1024,storageTotalBytes:15*1024*1024*1024,lastSyncedAt:new Date().toISOString(),autoBackup:!0,syncOnWifiOnly:!0,uploadQuality:"original"},Y1={provider:"onedrive",isConnected:!0,userEmail:"alu.engineer@outlook.com",userName:"David Jones",userAvatar:"https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=150&q=80",storageUsedBytes:24.5*1024*1024*1024,storageTotalBytes:100*1024*1024*1024,lastSyncedAt:new Date().toISOString(),autoBackup:!1,syncOnWifiOnly:!0,uploadQuality:"original"},Lm=d=>{if(d===0)return"0.0 B";const u=1024,h=["B","KB","MB","GB","TB"],m=Math.floor(Math.log(d)/Math.log(u));return parseFloat((d/Math.pow(u,m)).toFixed(1)).toFixed(1)+" "+h[m]},Km=[{id:"cosmic_aurora",name:"Cosmic Aurora",category:"Astrophotography",url:"https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=2070&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?q=80&w=400&auto=format&fit=crop"},{id:"deep_space",name:"Deep Space Galaxy",category:"Celestial",url:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=400&auto=format&fit=crop"},{id:"alpine_sunset",name:"Alpine Mountain Glow",category:"Landscape",url:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=2070&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?q=80&w=400&auto=format&fit=crop"},{id:"cyberpunk_city",name:"Neon Cyberpunk City",category:"Urban",url:"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=2047&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=400&auto=format&fit=crop"},{id:"ocean_twilight",name:"Ocean Twilight",category:"Nature",url:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2073&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=400&auto=format&fit=crop"},{id:"emerald_forest",name:"Emerald Pine Mist",category:"Nature",url:"https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=2070&auto=format&fit=crop",thumbUrl:"https://images.unsplash.com/photo-1448375240586-882707db888b?q=80&w=400&auto=format&fit=crop"}],Js={imageUrl:Km[0].url,blur:0,dim:35,mode:"dark"},Xm="galaxsee_custom_bg_config_v1";function K1(){if(typeof localStorage>"u")return Js;try{const d=localStorage.getItem(Xm);if(!d)return Js;const u=JSON.parse(d);return{imageUrl:u.imageUrl||Js.imageUrl,blur:typeof u.blur=="number"?u.blur:Js.blur,dim:typeof u.dim=="number"?u.dim:Js.dim,mode:u.mode==="light"?"light":"dark"}}catch{return Js}}function X1(d){if(!(typeof localStorage>"u"))try{localStorage.setItem(Xm,JSON.stringify(d))}catch(u){console.warn("Failed to save custom background config to localStorage:",u)}}const zm=`# 📜 ALUMUNGANDR MASTER INTELLECTUAL PROPERTY, TRADEMARK, COPYRIGHT & COMMERCIAL EXPLOITATION CHARTER
 
 Legal Notice & Master Ownership Declaration
 Entity & Brand: Alumungandr™
@@ -802,206 +802,216 @@ MIT License — Copyright (c) StrongLoop, Inc., and other expressjs.com contribu
 Permission is hereby granted, free of charge, to any person obtaining a copy.
 `,TutorialModal=({isOpen:u,onClose:h,theme:m})=>{
   const[step,setStep]=Ju.useState(0);
+  const[targetRect,setTargetRect]=Ju.useState(null);
   if(!u)return null;
   const isDark=m!=="light"&&m!=="light_galaxsee";
+  
   const steps=[
     {
-      title:"Welcome to Galaxsee Pro",
-      badge:"Overview",
-      icon:"🌌",
-      subtitle:"Ultra-Fast 120Hz Multi-Touch Photo & Media Studio",
-      desc:"Engineered for professional photographers and creators with sub-millisecond multi-touch responsiveness, on-device privacy, and hardware-accelerated rendering.",
-      points:[
-        {icon:"⚡",title:"120Hz Kinetic Physics",desc:"Silky-smooth multi-touch scaling, inertial scrolling, and marquee rubberband selection."},
-        {icon:"🔒",title:"100% Local-First & Private",desc:"Zero cloud telemetry or tracking. All indexing, edits, and vaults remain strictly on your local device."},
-        {icon:"🎛️",title:"Pro Workflow Suite",desc:"Integrated high-speed light table culling, non-destructive HSL editor, and smart batch operations."}
-      ],
-      tip:"💡 Tip: Double-tap or press Space on any photo to open the deep-zoom inspector."
+      selector:'[data-tour="search-filters"]',
+      icon:"🔍",
+      badge:"Search & Filters",
+      title:"Search & Filter Bar",
+      desc:"Quickly find photos by name, date, or tags. Click the filter chips to instantly isolate Favorites, RAW images, or Videos in one tap."
     },
     {
-      title:"Fluid Gestures & Deep Zoom",
-      badge:"Navigation",
-      icon:"⚡",
-      subtitle:"Pinch-to-Grid Scaling & 3200% Sub-Pixel Zoom",
-      desc:"Browse through tens of thousands of media files effortlessly with continuous multi-touch grid transitions and deep gigapixel inspection.",
-      points:[
-        {icon:"🤏",title:"Pinch-to-Grid Dynamic Scaling",desc:"Continuously transition between 1 and 14 thumbnail columns with 2 fingers or keys 1–6."},
-        {icon:"🔬",title:"Sub-Pixel Smooth Deep Zoom",desc:"Zoom up to 3200% into high-resolution images with real-time bicubic interpolation."},
-        {icon:"🎯",title:"Seamless 2-to-1 Finger Transitions",desc:"Pan smoothly with natural momentum and zero viewport edge snapping."}
-      ],
-      tip:"💡 Tip: Use arrow keys or swipe horizontally to quickly traverse adjacent photos."
-    },
-    {
-      title:"Cull Studio Light Table",
-      badge:"Culling Suite",
+      selector:'[data-tour="cull-button"]',
       icon:"📸",
-      subtitle:"High-Speed Burst Comparison & AI Winner Detection",
-      desc:"Triage photo shoots in record time with synchronized side-by-side comparison and instant rating hotkeys.",
-      points:[
-        {icon:"👁️",title:"Eye Focus 200%",desc:"1-click toggle to center and zoom all comparison slots to 200% upper-third portrait eye focus."},
-        {icon:"✨",title:"Auto-Pick Winner",desc:"High-contrast sharpness scoring engine to auto-flag the sharpest shot as a 5-star Keep."},
-        {icon:"📄",title:"Export .XMP Sidecars",desc:"Generate Adobe Lightroom & Capture One .xmp metadata files containing star ratings and color labels."},
-        {icon:"🎛️",title:"Integrated Studio Editor",desc:"Fine-tune color grading and exposure adjustments directly inside comparison viewports."}
-      ],
-      tip:"💡 Tip: Click 'Sync Locked' to pan and zoom all comparison slots in perfect lockstep."
+      badge:"Photo Triage",
+      title:"Cull Studio Light Table",
+      desc:"Compare burst photos side-by-side! Use 1-click Eye Focus (200%), Auto-Pick Winner to find the sharpest shot, and export star ratings to Adobe Lightroom."
     },
     {
-      title:"Studio Photo Editor",
-      badge:"Darkroom",
+      selector:'[data-tour="import-menu"]',
+      icon:"📥",
+      badge:"Media Ingestion",
+      title:"Import Photos & Folders",
+      desc:"Tap here to import individual photos or select entire folders from your phone, tablet, or external drive with automatic deep subfolder scanning."
+    },
+    {
+      selector:'[data-tour="sidebar-nav"]',
+      icon:"🗂️",
+      badge:"Navigation",
+      title:"Sidebar & Categories",
+      desc:"Switch between your full Timeline, custom Albums, Map view, Private Safe Box Vault, and Duplicate Cleaner."
+    },
+    {
+      selector:null,
+      icon:"⚡",
+      badge:"Multi-Touch Physics",
+      title:"Fluid Grid & Pinch-to-Zoom",
+      desc:"Pinch anywhere with two fingers (or press keys 1–6) to smoothly zoom thumbnails between 1 and 14 columns. Single photos zoom up to 3200% with zero edge snapping."
+    },
+    {
+      selector:null,
       icon:"🎨",
-      subtitle:"Non-Destructive HSL & Parametric Tone Curves",
-      desc:"Professional-grade color and exposure mastering tools integrated directly into your gallery workflow.",
-      points:[
-        {icon:"🌈",title:"8-Channel HSL Color Mixer",desc:"Dedicated hue, saturation, and luminance wheels for surgical color isolation."},
-        {icon:"📈",title:"Parametric RGB Tone Curves",desc:"Sculpt tone and contrast independently across Master, Red, Green, and Blue channels."},
-        {icon:"☀️",title:"Tone & Exposure Mastery",desc:"Exposure, contrast, highlights, shadows, whites, blacks, clarity, vibrance, and warmth."}
-      ],
-      tip:"💡 Tip: Press 'E' when viewing any photo to instantly enter the Studio Editor."
+      badge:"Photo Studio",
+      title:"Studio Photo Editor",
+      desc:"Double-tap any photo or press 'E' to open the built-in editor with 8-channel HSL color wheels, parametric RGB tone curves, exposure tuning, and non-destructive crops."
     },
     {
-      title:"Hardware AES-256 Vault",
-      badge:"Security",
-      icon:"🔒",
-      subtitle:"Zero-Knowledge On-Device Encrypted Safe Box",
-      desc:"Secure your private and sensitive media behind hardware-backed AES-256 encryption with zero cloud leak.",
-      points:[
-        {icon:"🔐",title:"AES-256-GCM Cipher",desc:"Military-grade cryptographic encryption with PBKDF2 key derivation."},
-        {icon:"🛡️",title:"Zero Cloud Leak",desc:"Vaulted media is encrypted in-place and is inaccessible to external scanners or telemetry."},
-        {icon:"⏱️",title:"Automatic Auto-Lock Timeout",desc:"Configurable session timeout ensures the safe box auto-locks when left unattended."}
-      ],
-      tip:"💡 Tip: Access and manage your safe box anytime from the Vault tab in the sidebar."
-    },
-    {
-      title:"Android Native Sync & Batch Ops",
-      badge:"Workflows",
-      icon:"📱",
-      subtitle:"MediaStore Auto-Sync & Deep Recursive Ingestion",
-      desc:"Deep Android operating system integration paired with powerful bulk media processing tools.",
-      points:[
-        {icon:"📱",title:"MediaStore Direct Auto-Sync",desc:"Instantly queries camera rolls, screenshots, and downloads on startup via native bridge."},
-        {icon:"📁",title:"SAF Recursive Folder Picker",desc:"Select any storage folder and recursively ingest all nested subdirectories up to 4 levels deep."},
-        {icon:"⚙️",title:"Smart Batch Operations",desc:"Bulk watermarking, EXIF metadata stripping, template-based renaming, and WebP/AVIF format compression."}
-      ],
-      tip:"💡 Tip: Select multiple photos with marquee drag, then click Batch Ops to apply bulk transforms."
+      selector:'[data-tour="settings-button"]',
+      icon:"⚙️",
+      badge:"Preferences",
+      title:"Settings & Customization",
+      desc:"Personalize your theme, set custom photo wallpapers, configure privacy timeouts, and re-launch this interactive tour anytime."
     }
   ];
+
   const cur=steps[step];
   const isFirst=step===0;
   const isLast=step===steps.length-1;
+
+  Ju.useEffect(()=>{
+    const updateRect=()=>{
+      if(cur&&cur.selector){
+        try{
+          const el=document.querySelector(cur.selector);
+          if(el){
+            const r=el.getBoundingClientRect();
+            setTargetRect({top:r.top,left:r.left,width:r.width,height:r.height});
+            return;
+          }
+        }catch(e){}
+      }
+      setTargetRect(null);
+    };
+    updateRect();
+    const timer=setTimeout(updateRect,100);
+    window.addEventListener("resize",updateRect);
+    window.addEventListener("scroll",updateRect,!0);
+    return()=>{
+      clearTimeout(timer);
+      window.removeEventListener("resize",updateRect);
+      window.removeEventListener("scroll",updateRect,!0);
+    };
+  },[step]);
+
   const finish=()=>{
     try{localStorage.setItem("galaxsee_tutorial_seen","true")}catch(e){}
     h();
   };
-  return a.jsx("div",{
-    className:"fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-6 bg-black/80 backdrop-blur-md animate-fade-in select-none",
-    onClick:e=>{if(e.target===e.currentTarget)finish();},
-    children:a.jsxs("div",{
-      className:`w-full max-w-2xl max-h-[92vh] flex flex-col rounded-3xl shadow-2xl border overflow-hidden transition-all duration-300 ${isDark?"bg-[#0c121e]/98 border-white/[0.14] text-slate-100 shadow-blue-500/15":"bg-white/98 border-slate-200 text-slate-800 shadow-slate-300"}`,
-      children:[
-        a.jsxs("div",{
-          className:`p-4 sm:p-5 flex items-center justify-between border-b ${isDark?"border-white/[0.08]":"border-slate-100"}`,
+
+  const isSmallScreen=typeof window!=="undefined"&&window.innerWidth<640;
+  let popoverStyle={};
+  if(!isSmallScreen&&targetRect){
+    const winW=window.innerWidth;
+    const winH=window.innerHeight;
+    const cardW=380;
+    const cardH=220;
+    let left=Math.max(16,Math.min(winW-cardW-16,targetRect.left+(targetRect.width/2)-(cardW/2)));
+    let top;
+    if(targetRect.top<winH/2){
+      top=Math.min(winH-cardH-16,targetRect.top+targetRect.height+14);
+    }else{
+      top=Math.max(16,targetRect.top-cardH-14);
+    }
+    popoverStyle={position:"fixed",top:`${top}px`,left:`${left}px`,width:`${cardW}px`};
+  }
+
+  return a.jsxs("div",{
+    className:"fixed inset-0 z-50 select-none",
+    children:[
+      targetRect?a.jsx("div",{
+        style:{
+          position:"fixed",
+          top:`${Math.max(0,targetRect.top-6)}px`,
+          left:`${Math.max(0,targetRect.left-6)}px`,
+          width:`${targetRect.width+12}px`,
+          height:`${targetRect.height+12}px`,
+          boxShadow:"0 0 0 9999px rgba(0, 0, 0, 0.72)",
+          borderRadius:"14px",
+          border:"2px solid rgba(59, 130, 246, 0.85)",
+          pointerEvents:"none",
+          zIndex:55,
+          transition:"all 0.3s cubic-bezier(0.16, 1, 0.3, 1)"
+        }
+      }):a.jsx("div",{className:"fixed inset-0 bg-black/75 backdrop-blur-sm z-50 pointer-events-auto transition-opacity duration-300"}),
+      a.jsx("div",{
+        className:isSmallScreen||!targetRect?"fixed inset-0 z-[60] flex items-center justify-center p-4 pointer-events-auto":"z-[60] pointer-events-auto",
+        style:!isSmallScreen&&targetRect?popoverStyle:{},
+        children:a.jsxs("div",{
+          className:`w-full max-w-sm sm:max-w-md flex flex-col rounded-2xl shadow-2xl border overflow-hidden transition-all duration-300 ${isDark?"bg-[#0e1524]/98 border-blue-500/30 text-slate-100 shadow-blue-500/20":"bg-white/98 border-blue-200 text-slate-800 shadow-xl"}`,
           children:[
             a.jsxs("div",{
-              className:"flex items-center gap-2.5",
+              className:`p-3.5 sm:p-4 flex items-center justify-between border-b ${isDark?"border-white/[0.08] bg-white/[0.02]":"border-slate-100 bg-slate-50"}`,
               children:[
-                a.jsx("span",{className:`px-2.5 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${isDark?"bg-blue-500/20 text-blue-400 border border-blue-500/30":"bg-blue-100 text-blue-700 border border-blue-200"}`,children:cur.badge}),
-                a.jsxs("span",{className:`text-xs font-mono font-semibold ${isDark?"text-slate-400":"text-slate-500"}`,children:["Step ",step+1," of ",steps.length]})
-              ]
-            }),
-            a.jsx("button",{
-              onClick:finish,
-              className:`w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold transition-all cursor-pointer ${isDark?"bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white":"bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900"}`,
-              title:"Close Guide",
-              children:"✕"
-            })
-          ]
-        }),
-        a.jsx("div",{
-          className:`w-full h-1.5 ${isDark?"bg-white/5":"bg-slate-100"}`,
-          children:a.jsx("div",{
-            className:"h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 transition-all duration-300",
-            style:{width:`${((step+1)/steps.length)*100}%`}
-          })
-        }),
-        a.jsxs("div",{
-          className:"flex-1 overflow-y-auto p-5 sm:p-7 space-y-5",
-          children:[
-            a.jsxs("div",{
-              className:"flex items-center gap-4",
-              children:[
-                a.jsx("div",{
-                  className:"w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-3xl shadow-lg shadow-blue-500/30 flex-shrink-0",
-                  children:cur.icon
-                }),
                 a.jsxs("div",{
-                  className:"space-y-0.5",
+                  className:"flex items-center gap-2",
                   children:[
-                    a.jsx("h2",{className:"text-lg sm:text-xl font-extrabold tracking-tight",children:cur.title}),
-                    a.jsx("p",{className:`text-xs font-semibold ${isDark?"text-blue-400":"text-blue-600"}`,children:cur.subtitle})
+                    a.jsx("span",{className:`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${isDark?"bg-blue-500/20 text-blue-400 border border-blue-500/30":"bg-blue-100 text-blue-700 border border-blue-200"}`,children:cur.badge}),
+                    a.jsxs("span",{className:`text-xs font-mono font-semibold ${isDark?"text-slate-400":"text-slate-500"}`,children:["Step ",step+1," of ",steps.length]})
                   ]
+                }),
+                a.jsx("button",{
+                  onClick:finish,
+                  className:`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${isDark?"bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white":"bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-900"}`,
+                  title:"Exit Tour",
+                  children:"✕"
                 })
               ]
             }),
-            a.jsx("p",{className:`text-xs sm:text-sm leading-relaxed ${isDark?"text-slate-300":"text-slate-600"}`,children:cur.desc}),
             a.jsx("div",{
-              className:"grid grid-cols-1 gap-2.5",
-              children:cur.points.map((p,idx)=>a.jsxs("div",{
-                key:idx,
-                className:`p-3.5 rounded-2xl border flex items-start gap-3 transition-all ${isDark?"bg-white/[0.03] border-white/[0.08]":"bg-slate-50 border-slate-200/80"}`,
-                children:[
-                  a.jsx("span",{className:"text-base flex-shrink-0 mt-0.5",children:p.icon}),
-                  a.jsxs("div",{
-                    className:"space-y-0.5",
-                    children:[
-                      a.jsx("h3",{className:"text-xs font-bold",children:p.title}),
-                      a.jsx("p",{className:`text-[11px] leading-relaxed ${isDark?"text-slate-400":"text-slate-500"}`,children:p.desc})
-                    ]
-                  })
-                ]
-              },idx))
-            }),
-            a.jsx("div",{
-              className:`p-3 rounded-xl border flex items-center gap-2.5 text-xs font-semibold ${isDark?"bg-blue-500/10 border-blue-500/20 text-blue-300":"bg-blue-50 border-blue-200 text-blue-700"}`,
-              children:a.jsx("span",{children:cur.tip})
-            })
-          ]
-        }),
-        a.jsxs("div",{
-          className:`p-4 sm:p-5 border-t flex items-center justify-between gap-3 ${isDark?"border-white/[0.08] bg-white/[0.01]":"border-slate-100 bg-slate-50/50"}`,
-          children:[
-            a.jsx("button",{
-              onClick:finish,
-              className:`px-3.5 py-2 rounded-xl text-xs font-bold transition-all cursor-pointer ${isDark?"text-slate-400 hover:text-white hover:bg-white/5":"text-slate-500 hover:text-slate-900 hover:bg-slate-100"}`,
-              children:"Close Guide"
-            }),
-            a.jsx("div",{
-              className:"hidden sm:flex items-center gap-1.5",
-              children:steps.map((_,idx)=>a.jsx("button",{
-                key:idx,
-                onClick:()=>setStep(idx),
-                className:`h-2 rounded-full transition-all cursor-pointer ${idx===step?"w-6 bg-blue-500":isDark?"w-2 bg-white/20 hover:bg-white/40":"w-2 bg-slate-300 hover:bg-slate-400"}`,
-                title:`Go to step ${idx+1}`
-              },idx))
+              className:`w-full h-1 ${isDark?"bg-white/5":"bg-slate-100"}`,
+              children:a.jsx("div",{
+                className:"h-full bg-gradient-to-r from-blue-500 via-indigo-500 to-cyan-400 transition-all duration-300",
+                style:{width:`${((step+1)/steps.length)*100}%`}
+              })
             }),
             a.jsxs("div",{
-              className:"flex items-center gap-2",
+              className:"p-4 sm:p-5 space-y-2.5",
               children:[
-                !isFirst&&a.jsx("button",{
-                  onClick:()=>setStep(s=>Math.max(0,s-1)),
-                  className:`px-4 py-2 rounded-xl text-xs font-bold border transition-all cursor-pointer ${isDark?"border-white/10 hover:bg-white/5 text-slate-300":"border-slate-200 hover:bg-slate-100 text-slate-700"}`,
-                  children:"◀ Previous"
+                a.jsxs("div",{
+                  className:"flex items-center gap-3",
+                  children:[
+                    a.jsx("div",{
+                      className:"w-10 h-10 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-xl shadow-md shadow-blue-500/30 flex-shrink-0",
+                      children:cur.icon
+                    }),
+                    a.jsx("h2",{className:"text-base font-extrabold tracking-tight",children:cur.title})
+                  ]
                 }),
+                a.jsx("p",{className:`text-xs sm:text-[13px] leading-relaxed ${isDark?"text-slate-300":"text-slate-600"}`,children:cur.desc})
+              ]
+            }),
+            a.jsxs("div",{
+              className:`p-3 sm:p-3.5 border-t flex items-center justify-between gap-2 ${isDark?"border-white/[0.08] bg-white/[0.01]":"border-slate-100 bg-slate-50/50"}`,
+              children:[
                 a.jsx("button",{
-                  onClick:isLast?finish:()=>setStep(s=>Math.min(steps.length-1,s+1)),
-                  className:"px-5 py-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-lg shadow-blue-500/25 active:scale-95 transition-all cursor-pointer",
-                  children:isLast?"Finish Tutorial 🎉":"Next ▶"
+                  onClick:finish,
+                  className:`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${isDark?"text-slate-400 hover:text-white":"text-slate-500 hover:text-slate-900"}`,
+                  children:"Skip Tour"
+                }),
+                a.jsx("div",{
+                  className:"flex items-center gap-1",
+                  children:steps.map((_,idx)=>a.jsx("button",{
+                    key:idx,
+                    onClick:()=>setStep(idx),
+                    className:`h-1.5 rounded-full transition-all cursor-pointer ${idx===step?"w-4 bg-blue-500":isDark?"w-1.5 bg-white/20 hover:bg-white/40":"w-1.5 bg-slate-300 hover:bg-slate-400"}`,
+                    title:`Step ${idx+1}`
+                  },idx))
+                }),
+                a.jsxs("div",{
+                  className:"flex items-center gap-1.5",
+                  children:[
+                    !isFirst&&a.jsx("button",{
+                      onClick:()=>setStep(s=>Math.max(0,s-1)),
+                      className:`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer ${isDark?"border-white/10 hover:bg-white/5 text-slate-300":"border-slate-200 hover:bg-slate-100 text-slate-700"}`,
+                      children:"◀ Back"
+                    }),
+                    a.jsx("button",{
+                      onClick:isLast?finish:()=>setStep(s=>Math.min(steps.length-1,s+1)),
+                      className:"px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 text-white font-extrabold text-xs shadow-md shadow-blue-500/25 active:scale-95 transition-all cursor-pointer",
+                      children:isLast?"Got it! 🎉":"Next ▶"
+                    })
+                  ]
                 })
               ]
             })
           ]
         })
-      ]
-    })
+      })
+    ]
   });
 },W1=({settings:d,onUpdateSettings:u,theme:h,onThemeChange:m,showHiddenItems:g=!1,onToggleShowHidden:w,onOpenVaultSetup:y,googleConnected:k=!1,onToggleGoogleConnected:_,oneDriveConnected:x=!1,onToggleOneDriveConnected:T,customBgConfig:N=Js,onUpdateCustomBgConfig:A,onOpenGalleryPicker:D,onOpenTutorial:tutFn})=>{
 const[tutAuto,setTutAuto]=Ju.useState(()=>{try{return localStorage.getItem("galaxsee_tutorial_autostart")==="true"}catch{return!1}});
