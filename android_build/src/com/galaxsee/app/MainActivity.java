@@ -908,11 +908,27 @@ public class MainActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if (webView != null && webView.canGoBack()) {
-            webView.goBack();
-        } else {
-            super.onBackPressed();
+        if (webView != null) {
+            webView.evaluateJavascript(
+                "(function() { " +
+                "  if (window.__galaxseeHandleBackPressed && window.__galaxseeHandleBackPressed()) { return true; } " +
+                "  const backBtn = document.querySelector('button[title*=\"Back\"], button[aria-label*=\"Back\"], button.galaxsee-back-btn'); " +
+                "  if (backBtn) { backBtn.click(); return true; } " +
+                "  return false; " +
+                "})()",
+                result -> {
+                    if (!"true".equals(result)) {
+                        if (webView.canGoBack()) {
+                            webView.goBack();
+                        } else {
+                            MainActivity.super.onBackPressed();
+                        }
+                    }
+                }
+            );
+            return;
         }
+        super.onBackPressed();
     }
 
     @Override
