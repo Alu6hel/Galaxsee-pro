@@ -48,10 +48,14 @@ public class MainActivity extends Activity {
     private static final int PERMISSION_REQUEST_CODE = 1002;
     private static final int FOLDER_PICKER_REQUEST_CODE = 1003;
     public static final String MEDIA_HOST = "galaxsee.local";
+    private String openedPhotoJson = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Process incoming intent if opened as default viewer or shared
+        handleIncomingIntent(getIntent());
 
         // Hardware acceleration & dark window background
         getWindow().setFlags(
@@ -98,6 +102,11 @@ public class MainActivity extends Activity {
                 injectNativeBridge();
                 if (hasStoragePermission()) {
                     syncDeviceMediaToWeb();
+                }
+                if (openedPhotoJson != null) {
+                    try {
+                        dispatchIncomingPhoto(new JSONObject(openedPhotoJson));
+                    } catch (Exception ignored) {}
                 }
             }
 
@@ -167,6 +176,180 @@ public class MainActivity extends Activity {
         webView.loadUrl("file:///android_asset/index.html");
     }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        handleIncomingIntent(intent);
+    }
+
+    private void handleIncomingIntent(Intent intent) {
+        if (intent == null) return;
+        String action = intent.getAction();
+        if (Intent.ACTION_VIEW.equals(action) || Intent.ACTION_SEND.equals(action) || Intent.ACTION_EDIT.equals(action)) {
+            Uri dataUri = intent.getData();
+            if (dataUri == null && Intent.ACTION_SEND.equals(action)) {
+                dataUri = intent.getParcelableExtra(Intent.EXTRA_STREAM);
+            }
+            if (dataUri != null) {
+                try {
+                    int flags = intent.getFlags() & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    if (flags != 0) {
+                        try {
+                            getContentResolver().takePersistableUriPermission(dataUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        } catch (Exception ignored) {}
+                    }
+                    JSONObject photo = resolvePhotoFromUri(dataUri);
+                    if (photo != null) {
+                        openedPhotoJson = photo.toString();
+                        Log.d(TAG, "Resolved incoming photo from intent: " + openedPhotoJson);
+                        if (webView != null) {
+                            runOnUiThread(() -> dispatchIncomingPhoto(photo));
+                        }
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error resolving incoming intent uri: " + dataUri, e);
+                }
+            }
+        }
+    }
+
+    private JSONObject resolvePhotoFromUri(Uri uri) {
+        try {
+            String name = "Photo_" + System.currentTimeMillis();
+            long size = 0;
+            String mime = getContentResolver().getType(uri);
+            int width = 0;
+            int height = 0;
+
+            if ("content".equalsIgnoreCase(uri.getScheme())) {
+                try (Cursor cursor = getContentResolver().query(uri, null, null, null, null)) {
+                    if (cursor != null && cursor.moveToFirst()) {
+                        int nameIdx = cursor.getColumnIndex(MediaStore.MediaColumns.DISPLAY_NAME);
+                        if (nameIdx != -1) {
+                            String n = cursor.getString(nameIdx);
+                            if (n != null) name = n;
+                        }
+                        int sizeIdx = cursor.getColumnIndex(MediaStore.MediaColumns.SIZE);
+                        if (sizeIdx != -1) size = cursor.getLong(sizeIdx);
+                        int mimeIdx = cursor.getColumnIndex(MediaStore.MediaColumns.MIME_TYPE);
+                        if (mimeIdx != -1) {
+                            String m = cursor.getString(mimeIdx);
+                            if (m != null) mime = m;
+                        }
+                        int wIdx = cursor.getColumnIndex(MediaStore.MediaColumns.WIDTH);
+                        if (wIdx != -1) width = cursor.getInt(wIdx);
+                        int hIdx = cursor.getColumnIndex(MediaStore.MediaColumns.HEIGHT);
+                        if (hIdx != -1) height = cursor.getInt(hIdx);
+                    }
+                } catch (Exception ignored) {}
+            } else if ("file".equalsIgnoreCase(uri.getScheme())) {
+                String seg = uri.getLastPathSegment();
+                if (seg != null) name = seg;
+            }
+
+            if (name == null) name = "Media_" + System.currentTimeMillis();
+            if (mime == null) {
+                String lower = name.toLowerCase();
+                if (lower.endsWith(".mp4") || lower.endsWith(".mkv") || lower.endsWith(".mov")) {
+                    mime = "video/mp4";
+                } else if (lower.endsWith(".png")) {
+                    mime = "image/png";
+                } else if (lower.endsWith(".webp")) {
+                    mime = "image/webp";
+                } else if (lower.endsWith(".avif")) {
+                    mime = "image/avif";
+                } else if (lower.endsWith(".heic") || lower.endsWith(".heif")) {
+                    mime = "image/heic";
+                } else if (lower.endsWith(".dng") || lower.endsWith(".cr2") || lower.endsWith(".cr3") || lower.endsWith(".arw") || lower.endsWith(".nef") || lower.endsWith(".raw")) {
+                    mime = "image/x-raw";
+                } else {
+                    mime = "image/jpeg";
+                }
+            }
+
+            if (width <= 0 || height <= 0) {
+                try (InputStream is = getContentResolver().openInputStream(uri)) {
+                    if (is != null) {
+                        BitmapFactory.Options options = new BitmapFactory.Options();
+                        options.inJustDecodeBounds = true;
+                        BitmapFactory.decodeStream(is, null, options);
+                        width = options.outWidth;
+                        height = options.outHeight;
+                    }
+                } catch (Exception ignored) {}
+            }
+
+            if (width <= 0) width = 1920;
+            if (height <= 0) height = 1080;
+            double aspect = (double) width / (double) height;
+
+            SimpleDateFormat isoFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.US);
+            isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
+            String dateIso = isoFormat.format(new Date());
+
+            String encodedUri = Uri.encode(uri.toString());
+            boolean isVideo = mime.startsWith("video/");
+            boolean isRaw = name.toLowerCase().endsWith(".dng") || name.toLowerCase().endsWith(".raw") || name.toLowerCase().endsWith(".cr2") || name.toLowerCase().endsWith(".cr3") || name.toLowerCase().endsWith(".arw") || name.toLowerCase().endsWith(".nef");
+
+            JSONObject photo = new JSONObject();
+            photo.put("id", "intent-opened-" + Math.abs(uri.toString().hashCode()));
+            photo.put("title", name.replaceFirst("[.][^.]+$", ""));
+            photo.put("description", name + (size > 0 ? " (" + (size / 1024) + " KB)" : ""));
+            photo.put("url", "https://" + MEDIA_HOST + "/direct_uri/" + encodedUri);
+            photo.put("thumbnailUrl", "https://" + MEDIA_HOST + "/direct_uri/" + encodedUri);
+            photo.put("width", width);
+            photo.put("height", height);
+            photo.put("aspectRatio", aspect);
+            photo.put("date", dateIso);
+            photo.put("category", isVideo ? "Videos" : "Photos");
+            photo.put("fileType", mime);
+            photo.put("fileSize", size > 0 ? size : 2048000);
+            photo.put("isFavorite", false);
+            photo.put("isVault", false);
+            photo.put("isHidden", false);
+            photo.put("isRaw", isRaw);
+            photo.put("isHdr", false);
+            photo.put("isLivePhoto", false);
+            photo.put("cloudSource", "local");
+            photo.put("rating", 0);
+
+            JSONObject exif = new JSONObject();
+            exif.put("cameraMake", "Device");
+            exif.put("cameraModel", "External File");
+            exif.put("iso", 100);
+            photo.put("exif", exif);
+
+            JSONArray tags = new JSONArray();
+            tags.put("device");
+            tags.put("opened");
+            photo.put("tags", tags);
+            photo.put("people", new JSONArray());
+
+            return photo;
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to build photo JSON for URI: " + uri, e);
+            return null;
+        }
+    }
+
+    private void dispatchIncomingPhoto(JSONObject photo) {
+        if (webView == null || photo == null) return;
+        String escaped = JSONObject.quote(photo.toString());
+        String js = "(function() {" +
+            "  try {" +
+            "    var p = JSON.parse(" + escaped + ");" +
+            "    if (typeof window.__galaxsee_onExternalPhoto === 'function') {" +
+            "      window.__galaxsee_onExternalPhoto(p);" +
+            "    }" +
+            "    window.dispatchEvent(new CustomEvent('galaxseeOpenExternalPhoto', { detail: { photo: p } }));" +
+            "  } catch(e) {" +
+            "    console.error('Error dispatching external photo:', e);" +
+            "  }" +
+            "})();";
+        webView.evaluateJavascript(js, null);
+    }
+
     private void injectNativeBridge() {
         String js = "(function() {" +
             "  if (window.__galaxsee_native_injected) return;" +
@@ -182,6 +365,22 @@ public class MainActivity extends Activity {
             "      } catch (e) {" +
             "        console.error('Failed to scan device photos:', e);" +
             "        return { photos: [] };" +
+            "      }" +
+            "    }," +
+            "    getInitialOpenedPhoto: function() {" +
+            "      try {" +
+            "        var json = window.GalaxseeAndroid.getInitialOpenedPhotoJson();" +
+            "        return json ? JSON.parse(json) : null;" +
+            "      } catch (e) { return null; }" +
+            "    }," +
+            "    openDefaultAppsSettings: function() {" +
+            "      if (window.GalaxseeAndroid && typeof window.GalaxseeAndroid.setAsDefaultViewer === 'function') {" +
+            "        window.GalaxseeAndroid.setAsDefaultViewer();" +
+            "      }" +
+            "    }," +
+            "    setAsDefaultViewer: function() {" +
+            "      if (window.GalaxseeAndroid && typeof window.GalaxseeAndroid.setAsDefaultViewer === 'function') {" +
+            "        window.GalaxseeAndroid.setAsDefaultViewer();" +
             "      }" +
             "    }," +
             "    pickFiles: async function() {" +
@@ -203,7 +402,12 @@ public class MainActivity extends Activity {
             String path = uri.getPath();
             if (path == null) return null;
 
-            if (path.startsWith("/thumbnail/")) {
+            if (path.startsWith("/direct_uri/")) {
+                String encoded = path.substring("/direct_uri/".length());
+                String decoded = Uri.decode(encoded);
+                Uri targetUri = Uri.parse(decoded);
+                return openDocStream(targetUri);
+            } else if (path.startsWith("/thumbnail/")) {
                 String idStr = path.substring("/thumbnail/".length());
                 if (idStr.startsWith("doc_")) {
                     String docUriStr = Uri.decode(idStr.substring(4));
@@ -263,9 +467,34 @@ public class MainActivity extends Activity {
 
     private WebResourceResponse openDocStream(Uri docUri) {
         try {
-            InputStream is = getContentResolver().openInputStream(docUri);
-            String mimeType = getContentResolver().getType(docUri);
-            if (mimeType == null) mimeType = "image/jpeg";
+            InputStream is = null;
+            String mimeType = null;
+            if ("file".equalsIgnoreCase(docUri.getScheme())) {
+                String path = docUri.getPath();
+                if (path != null) {
+                    java.io.File file = new java.io.File(path);
+                    if (file.exists()) {
+                        is = new java.io.FileInputStream(file);
+                    }
+                }
+            }
+            if (is == null) {
+                is = getContentResolver().openInputStream(docUri);
+                mimeType = getContentResolver().getType(docUri);
+            }
+            if (mimeType == null) {
+                String p = docUri.getPath();
+                if (p != null) {
+                    String lower = p.toLowerCase();
+                    if (lower.endsWith(".png")) mimeType = "image/png";
+                    else if (lower.endsWith(".webp")) mimeType = "image/webp";
+                    else if (lower.endsWith(".avif")) mimeType = "image/avif";
+                    else if (lower.endsWith(".mp4") || lower.endsWith(".mkv")) mimeType = "video/mp4";
+                    else mimeType = "image/jpeg";
+                } else {
+                    mimeType = "image/jpeg";
+                }
+            }
             if (is != null) {
                 return new WebResourceResponse(mimeType, "UTF-8", is);
             }
@@ -282,6 +511,11 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface
+        public String getInitialOpenedPhotoJson() {
+            return openedPhotoJson != null ? openedPhotoJson : "";
+        }
+
+        @JavascriptInterface
         public boolean hasPermissions() {
             return hasStoragePermission();
         }
@@ -289,6 +523,33 @@ public class MainActivity extends Activity {
         @JavascriptInterface
         public void requestAppPermissions() {
             runOnUiThread(() -> checkAndRequestPermissions());
+        }
+
+        @JavascriptInterface
+        public void setAsDefaultViewer() {
+            runOnUiThread(() -> {
+                try {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_DEFAULT_APPS_SETTINGS);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } else {
+                        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                } catch (Exception e) {
+                    try {
+                        Intent intent = new Intent(android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                        intent.setData(Uri.parse("package:" + getPackageName()));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    } catch (Exception ex) {
+                        Log.e(TAG, "Failed to launch default apps settings", ex);
+                    }
+                }
+            });
         }
 
         @JavascriptInterface
