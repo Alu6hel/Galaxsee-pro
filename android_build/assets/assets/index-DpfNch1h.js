@@ -804,57 +804,71 @@ Permission is hereby granted, free of charge, to any person obtaining a copy.
   const[step,setStep]=Ju.useState(0);
   const[targetRect,setTargetRect]=Ju.useState(null);
   if(!u)return null;
-  const isDark=m!=="light"&&m!=="light_galaxsee";
+  const isDark=true;
   
   const steps=[
     {
       selector:'[data-tour="search-filters"]',
       icon:"🔍",
-      badge:"Search & Filters",
-      title:"Search & Filter Bar",
-      desc:"Quickly find photos by name, date, or tags. Click the filter chips to instantly isolate Favorites, RAW images, or Videos in one tap."
+      badge:"AI Search & Vector Index",
+      title:"AI Vector & Semantic Search Bar",
+      desc:"Search with natural language queries (e.g. \x27sunset beach\x27, \x27dog running\x27, \x27red car\x27) powered by on-device vector embeddings, plus 1-tap filter pills for Favorites, RAW negatives, and 4K Videos."
     },
     {
       selector:'[data-tour="cull-button"]',
-      icon:"📸",
-      badge:"Photo Triage",
-      title:"Cull Studio Light Table",
-      desc:"Compare burst photos side-by-side! Use 1-click Eye Focus (200%), Auto-Pick Winner to find the sharpest shot, and export star ratings to Adobe Lightroom."
+      icon:"🪄",
+      badge:"Rapid Burst Triage (PRO)",
+      title:"Cull Studio & Light Table",
+      desc:"Triage burst sequences at sub-15ms speeds! Compare shots in 1-Up, 2-Up, or 4-Up split grids, trigger instant Eye Focus (200%), Auto-Pick Winner, and export 5-star ratings & color labels to Adobe Lightroom via sidecar XMP."
     },
     {
       selector:'[data-tour="import-menu"]',
       icon:"📥",
-      badge:"Media Ingestion",
-      title:"Import Photos & Folders",
-      desc:"Tap here to import individual photos or select entire folders from your phone, tablet, or external drive with automatic deep subfolder scanning."
+      badge:"Sub-6ms Ingestion",
+      title:"Deep Folder & RAW Negative Ingestion",
+      desc:"Import individual photos or entire folders with deep recursive subfolder scanning. Built-in binary stream decoder instantly decodes Sony ARW, Canon CR2/CR3, Nikon NEF, and Adobe DNG in under 6ms."
     },
     {
       selector:'[data-tour="sidebar-nav"]',
       icon:"🗂️",
-      badge:"Navigation",
-      title:"Sidebar & Categories",
-      desc:"Switch between your full Timeline, custom Albums, Map view, Private Safe Box Vault, and Duplicate Cleaner."
+      badge:"Studio Navigation",
+      title:"Studio Sidebar & Smart Workspaces",
+      desc:"Quickly navigate between your main Timeline, Storage Drives, Smart Categorized Albums, Geotagged Interactive Map View, Safe Box Vault, Duplicates Cleaner, and 30-day Recycle Bin."
     },
     {
       selector:null,
       icon:"⚡",
-      badge:"Multi-Touch Physics",
-      title:"Fluid Grid & Pinch-to-Zoom",
-      desc:"Pinch anywhere with two fingers (or press keys 1–6) to smoothly zoom thumbnails between 1 and 14 columns. Single photos zoom up to 3200% with zero edge snapping."
+      badge:"120Hz Gestures",
+      title:"Fluid Multi-Touch Physics & Infinite Zoom",
+      desc:"Pinch with two fingers (or press keys 1–6) to smoothly zoom thumbnails between 1 and 14 columns. Single photos zoom up to 3200% with sub-pixel clarity and zero edge snapping."
     },
     {
       selector:null,
       icon:"🎨",
-      badge:"Photo Studio",
-      title:"Studio Photo Editor",
-      desc:"Double-tap any photo or press 'E' to open the built-in editor with 8-channel HSL color wheels, parametric RGB tone curves, exposure tuning, and non-destructive crops."
+      badge:"GPU Color Grading (PRO)",
+      title:"120 FPS WebGL Studio Photo Editor",
+      desc:"Double-tap any photo or press \x27E\x27 to enter the color grading suite: selective 8-channel HSL color wheels, parametric RGB tone curves with spline interpolation, LUT grading, exposure/contrast, and lossless crops."
+    },
+    {
+      selector:null,
+      icon:"🛡️",
+      badge:"Hardware Security",
+      title:"Hardware AES-256 Vault & Decoy PIN",
+      desc:"Protect sensitive photos with zero-knowledge hardware AES-256 GCM encryption. Features biometric authentication and a configurable Decoy Duress PIN to open a clean dummy sandbox."
+    },
+    {
+      selector:null,
+      icon:"☁️",
+      badge:"Cloud Ecosystem",
+      title:"In-App Google Photos & OneDrive Connectors",
+      desc:"Directly sign in with Google or Microsoft to browse and backup your cloud galleries right inside Galaxsee without leaving the app."
     },
     {
       selector:'[data-tour="settings-button"]',
       icon:"⚙️",
-      badge:"Preferences",
-      title:"Settings & Customization",
-      desc:"Personalize your theme, set custom photo wallpapers, configure privacy timeouts, and re-launch this interactive tour anytime."
+      badge:"Personalization & Engine",
+      title:"Settings, Starfield Themes & Geometry",
+      desc:"Switch between 60fps Starfield themes, custom photo wallpapers, and 3-way UI Edge corner geometry (Sharp, Subtle Chamfer, Curved). Re-launch this tour anytime from Settings!"
     }
   ];
 
@@ -887,123 +901,152 @@ Permission is hereby granted, free of charge, to any person obtaining a copy.
     };
   },[step]);
 
+  Ju.useEffect(()=>{
+    const handleKey=(e)=>{
+      if(e.key==="ArrowRight"||e.key==="Enter"){
+        e.preventDefault();
+        try{we.playKeypad()}catch(err){}
+        if(isLast){finish();}else{setStep(s=>Math.min(steps.length-1,s+1));}
+      }else if(e.key==="ArrowLeft"){
+        e.preventDefault();
+        try{we.playKeypad()}catch(err){}
+        setStep(s=>Math.max(0,s-1));
+      }else if(e.key==="Escape"){
+        e.preventDefault();
+        finish();
+      }
+    };
+    window.addEventListener("keydown",handleKey);
+    return()=>window.removeEventListener("keydown",handleKey);
+  },[step,isLast]);
+
   const finish=()=>{
     try{localStorage.setItem("galaxsee_tutorial_seen","true")}catch(e){}
+    try{we.playUnlock()}catch(err){}
     h();
   };
 
-  const isSmallScreen=typeof window!=="undefined"&&window.innerWidth<640;
+  const isSmallScreen=typeof window!=="undefined"&&window.innerWidth<768;
   let popoverStyle={};
   if(!isSmallScreen&&targetRect){
     const winW=window.innerWidth;
     const winH=window.innerHeight;
-    const cardW=390;
-    const cardH=240;
-    let left=Math.max(20,Math.min(winW-cardW-20,targetRect.left+(targetRect.width/2)-(cardW/2)));
-    let top;
-    if(targetRect.top<winH/2){
-      top=Math.min(winH-cardH-20,targetRect.top+targetRect.height+14);
+    const cardW=420;
+    const cardH=280;
+    let left,top;
+    if(targetRect.left+targetRect.width<=winW*0.35&&targetRect.height>winH*0.3){
+      left=Math.min(winW-cardW-24,targetRect.left+targetRect.width+24);
+      top=Math.max(24,Math.min(winH-cardH-24,targetRect.top+(targetRect.height/2)-(cardH/2)));
+    }else if(targetRect.top<120){
+      left=Math.max(24,Math.min(winW-cardW-24,targetRect.left+(targetRect.width/2)-(cardW/2)));
+      top=Math.min(winH-cardH-24,targetRect.top+targetRect.height+18);
     }else{
-      top=Math.max(20,targetRect.top-cardH-14);
+      left=Math.max(24,Math.min(winW-cardW-24,targetRect.left+(targetRect.width/2)-(cardW/2)));
+      top=targetRect.top<winH/2?Math.min(winH-cardH-24,targetRect.top+targetRect.height+18):Math.max(24,targetRect.top-cardH-18);
     }
-    popoverStyle={position:"fixed",top:`${top}px`,left:`${left}px`,width:`${cardW}px`};
+    popoverStyle={position:"fixed",top:`${top}px`,left:`${left}px`,width:`${cardW}px`,zIndex:99999};
   }
 
   return a.jsxs("div",{
-    className:"fixed inset-0 z-50 select-none",
+    className:"fixed inset-0 select-none font-['Plus_Jakarta_Sans',sans-serif]",
+    style:{zIndex:90000},
     children:[
       targetRect?a.jsx("div",{
         style:{
           position:"fixed",
-          top:`${Math.max(0,targetRect.top-6)}px`,
-          left:`${Math.max(0,targetRect.left-6)}px`,
-          width:`${targetRect.width+12}px`,
-          height:`${targetRect.height+12}px`,
-          boxShadow:"0 0 0 9999px rgba(0, 0, 0, 0.78)",
-          borderRadius:"14px",
-          border:"2.5px solid #3b82f6",
+          top:`${Math.max(0,targetRect.top-8)}px`,
+          left:`${Math.max(0,targetRect.left-8)}px`,
+          width:`${targetRect.width+16}px`,
+          height:`${targetRect.height+16}px`,
+          boxShadow:"0 0 0 9999px rgba(0, 0, 0, 0.82), 0 0 25px rgba(56, 189, 248, 0.6)",
+          borderRadius:"16px",
+          border:"3px solid #38bdf8",
+          outline:"4px solid rgba(56, 189, 248, 0.45)",
           pointerEvents:"none",
-          zIndex:55,
+          zIndex:90001,
           transition:"all 0.25s cubic-bezier(0.16, 1, 0.3, 1)"
         }
-      }):a.jsx("div",{className:"fixed inset-0 bg-black/80 z-50 pointer-events-auto transition-opacity duration-300"}),
+      }):a.jsx("div",{className:"fixed inset-0 bg-black/85 backdrop-blur-sm pointer-events-auto transition-opacity duration-300",style:{zIndex:90001}}),
       a.jsx("div",{
-        className:isSmallScreen||!targetRect?"fixed inset-0 z-[60] flex items-center justify-center p-4 pointer-events-auto":"z-[60] pointer-events-auto",
-        style:!isSmallScreen&&targetRect?popoverStyle:{},
+        className:isSmallScreen||!targetRect?"fixed inset-0 flex items-center justify-center p-4 pointer-events-auto":"pointer-events-auto",
+        style:isSmallScreen||!targetRect?{position:"fixed",inset:0,zIndex:99999}:{...popoverStyle,zIndex:99999},
         children:a.jsxs("div",{
-          className:`w-full max-w-sm sm:max-w-md flex flex-col rounded-2xl shadow-2xl border-2 overflow-hidden transition-all duration-300 ${isDark?"bg-[#0f172a] border-blue-500/40 text-white shadow-black/80":"bg-white border-blue-400 text-slate-900 shadow-slate-400"}`,
-          style:{backgroundColor:isDark?"#0f172a":"#ffffff",opacity:1},
+          className:"w-full max-w-sm sm:max-w-md flex flex-col rounded-3xl overflow-hidden transition-all duration-300 animate-scale-up",
+          style:{opacity:1,backgroundColor:"#1e293b",border:"2.5px solid #60a5fa",outline:"4px solid rgba(96, 165, 250, 0.4)",boxShadow:"0 30px 70px rgba(0,0,0,0.95), 0 0 45px rgba(96, 165, 250, 0.5)",color:"#ffffff"},
           children:[
             a.jsxs("div",{
-              className:`p-3.5 sm:p-4 flex items-center justify-between border-b ${isDark?"border-slate-700 bg-[#1e293b]":"border-slate-200 bg-slate-100"}`,
+              className:"p-4 flex items-center justify-between border-b",
+              style:{backgroundColor:"#334155",borderColor:"#475569"},
               children:[
                 a.jsxs("div",{
                   className:"flex items-center gap-2",
                   children:[
-                    a.jsx("span",{className:`px-2 py-0.5 rounded-full text-[10px] font-extrabold uppercase tracking-wider ${isDark?"bg-blue-600/30 text-blue-300 border border-blue-500/40":"bg-blue-100 text-blue-800 border border-blue-300"}`,children:cur.badge}),
-                    a.jsxs("span",{className:`text-xs font-mono font-bold ${isDark?"text-slate-300":"text-slate-600"}`,children:["Step ",step+1," of ",steps.length]})
+                    a.jsx("span",{className:"px-3 py-1 rounded-full text-[11px] font-black uppercase tracking-wider bg-blue-500/30 text-blue-300 border border-blue-400/70 shadow-sm",children:cur.badge}),
+                    a.jsxs("span",{className:"text-xs font-mono font-bold text-slate-200",children:["Step ",step+1," of ",steps.length]})
                   ]
                 }),
                 a.jsx("button",{
                   onClick:finish,
-                  className:`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold transition-all cursor-pointer ${isDark?"bg-slate-700 hover:bg-slate-600 text-slate-200 hover:text-white":"bg-slate-200 hover:bg-slate-300 text-slate-700 hover:text-slate-900"}`,
-                  title:"Exit Tour",
+                  className:"w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all cursor-pointer bg-slate-600 hover:bg-slate-500 text-white shadow-md",
+                  title:"Exit Tour (Esc)",
                   children:"✕"
                 })
               ]
             }),
             a.jsx("div",{
-              className:`w-full h-1.5 ${isDark?"bg-slate-800":"bg-slate-200"}`,
+              className:"w-full h-1.5 bg-slate-700",
               children:a.jsx("div",{
-                className:"h-full bg-blue-500 transition-all duration-300",
+                className:"h-full bg-gradient-to-r from-blue-400 via-indigo-400 to-cyan-300 transition-all duration-300 shadow-md",
                 style:{width:`${((step+1)/steps.length)*100}%`}
               })
             }),
             a.jsxs("div",{
-              className:`p-4 sm:p-5 space-y-3 ${isDark?"bg-[#0f172a]":"bg-white"}`,
+              className:"p-5 space-y-3.5",
+              style:{backgroundColor:"#1e293b"},
               children:[
                 a.jsxs("div",{
-                  className:"flex items-center gap-3",
+                  className:"flex items-center gap-3.5",
                   children:[
                     a.jsx("div",{
-                      className:"w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-xl shadow-md shadow-blue-500/40 flex-shrink-0 text-white",
+                      className:"w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-2xl shadow-lg shadow-blue-500/50 flex-shrink-0 text-white border border-white/40",
                       children:cur.icon
                     }),
-                    a.jsx("h2",{className:`text-base font-extrabold tracking-tight ${isDark?"text-white":"text-slate-900"}`,children:cur.title})
+                    a.jsx("h2",{className:"text-base sm:text-lg font-black tracking-tight",style:{color:"#ffffff",textShadow:"0 1px 3px rgba(0,0,0,0.7)"},children:cur.title})
                   ]
                 }),
-                a.jsx("p",{className:`text-xs sm:text-[13px] font-medium leading-relaxed ${isDark?"text-slate-200":"text-slate-700"}`,children:cur.desc})
+                a.jsx("p",{className:"text-xs sm:text-[13.5px] font-medium leading-relaxed",style:{color:"#f1f5f9"},children:cur.desc})
               ]
             }),
             a.jsxs("div",{
-              className:`p-3 sm:p-3.5 border-t flex items-center justify-between gap-2 ${isDark?"border-slate-700 bg-[#1e293b]":"border-slate-200 bg-slate-50"}`,
+              className:"p-3.5 sm:p-4 border-t flex items-center justify-between gap-2",
+              style:{backgroundColor:"#334155",borderColor:"#475569"},
               children:[
                 a.jsx("button",{
                   onClick:finish,
-                  className:`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all cursor-pointer ${isDark?"text-slate-300 hover:text-white":"text-slate-600 hover:text-slate-900"}`,
+                  className:"px-3 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-slate-300 hover:text-white hover:bg-slate-600/80",
                   children:"Skip Tour"
                 }),
                 a.jsx("div",{
                   className:"flex items-center gap-1.5",
                   children:steps.map((_,idx)=>a.jsx("button",{
                     key:idx,
-                    onClick:()=>setStep(idx),
-                    className:`h-2 rounded-full transition-all cursor-pointer ${idx===step?"w-5 bg-blue-500":isDark?"w-2 bg-slate-600 hover:bg-slate-500":"w-2 bg-slate-300 hover:bg-slate-400"}`,
+                    onClick:()=>{try{we.playKeypad()}catch(e){};setStep(idx)},
+                    className:`h-2.5 rounded-full transition-all cursor-pointer ${idx===step?"w-6 bg-gradient-to-r from-blue-400 to-cyan-300 shadow-md shadow-blue-500/70":"w-2.5 bg-slate-500 hover:bg-slate-400"}`,
                     title:`Step ${idx+1}`
                   },idx))
                 }),
                 a.jsxs("div",{
-                  className:"flex items-center gap-1.5",
+                  className:"flex items-center gap-2",
                   children:[
                     !isFirst&&a.jsx("button",{
-                      onClick:()=>setStep(s=>Math.max(0,s-1)),
-                      className:`px-3 py-1.5 rounded-lg text-xs font-bold border transition-all cursor-pointer ${isDark?"border-slate-600 hover:bg-slate-700 text-slate-200":"border-slate-300 hover:bg-slate-100 text-slate-800"}`,
+                      onClick:()=>{try{we.playKeypad()}catch(e){};setStep(s=>Math.max(0,s-1))},
+                      className:"px-3.5 py-1.5 rounded-xl text-xs font-bold border transition-all cursor-pointer border-slate-500 bg-slate-600 hover:bg-slate-500 text-white shadow-sm",
                       children:"◀ Back"
                     }),
                     a.jsx("button",{
-                      onClick:isLast?finish:()=>setStep(s=>Math.min(steps.length-1,s+1)),
-                      className:"px-4 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-500 text-white font-extrabold text-xs shadow-md shadow-blue-600/30 active:scale-95 transition-all cursor-pointer",
-                      children:isLast?"Got it! 🎉":"Next ▶"
+                      onClick:()=>{try{we.playKeypad()}catch(e){};isLast?finish():setStep(s=>Math.min(steps.length-1,s+1))},
+                      className:"px-5 py-2 rounded-xl bg-gradient-to-r from-blue-500 via-indigo-600 to-cyan-500 hover:from-blue-400 hover:to-cyan-400 text-white font-black text-xs shadow-lg shadow-blue-500/60 active:scale-95 transition-all cursor-pointer flex items-center gap-1.5 border border-blue-400/50",
+                      children:isLast?"Got it! 🚀":"Next ▶"
                     })
                   ]
                 })
