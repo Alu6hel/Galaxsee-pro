@@ -1,12 +1,16 @@
 package com.galaxsee.app;
 
 import android.app.Activity;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
+import android.widget.Toast;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -313,6 +317,14 @@ public class MainActivity extends Activity {
 
             // Fallback MIME detection from file extension
             String lowerName = name.toLowerCase();
+            if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mkv") || lowerName.endsWith(".mov") || lowerName.endsWith(".webm") || lowerName.endsWith(".avi") || lowerName.endsWith(".flv") || lowerName.endsWith(".3gp") || lowerName.endsWith(".wmv") || lowerName.endsWith(".m4v")) {
+                // Strictly ignore videos per application policy
+                return null;
+            }
+            if (mime != null && mime.startsWith("video/")) {
+                return null;
+            }
+
             if (mime == null || mime.isEmpty() || "application/octet-stream".equals(mime)) {
                 if (lowerName.endsWith(".png")) mime = "image/png";
                 else if (lowerName.endsWith(".webp")) mime = "image/webp";
@@ -320,7 +332,6 @@ public class MainActivity extends Activity {
                 else if (lowerName.endsWith(".heic") || lowerName.endsWith(".heif")) mime = "image/heic";
                 else if (lowerName.endsWith(".gif")) mime = "image/gif";
                 else if (lowerName.endsWith(".bmp")) mime = "image/bmp";
-                else if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mkv") || lowerName.endsWith(".mov") || lowerName.endsWith(".webm")) mime = "video/mp4";
                 else if (lowerName.endsWith(".dng") || lowerName.endsWith(".raw") || lowerName.endsWith(".cr2") || lowerName.endsWith(".cr3") || lowerName.endsWith(".arw") || lowerName.endsWith(".nef")) mime = "image/x-raw";
                 else mime = "image/jpeg";
             }
@@ -350,7 +361,6 @@ public class MainActivity extends Activity {
             String uriKey = "intent_" + Math.abs(uri.toString().hashCode());
             sDirectUriMap.put(uriKey, uri);
 
-            boolean isVideo = mime.startsWith("video/");
             boolean isRaw = lowerName.endsWith(".dng") || lowerName.endsWith(".raw") || lowerName.endsWith(".cr2") || lowerName.endsWith(".cr3") || lowerName.endsWith(".arw") || lowerName.endsWith(".nef");
 
             // Format friendly file size
@@ -373,7 +383,7 @@ public class MainActivity extends Activity {
             photo.put("height", height);
             photo.put("aspectRatio", aspect);
             photo.put("date", dateIso);
-            photo.put("category", isVideo ? "Videos" : "Photos");
+            photo.put("category", "Photos");
             photo.put("fileType", mime);
             photo.put("fileSize", size > 0 ? size : 2048000);
             photo.put("isFavorite", false);
@@ -677,6 +687,43 @@ public class MainActivity extends Activity {
         public void openFolder() {
             openFolderPicker();
         }
+
+        @JavascriptInterface
+        public boolean copyPhotoToClipboard(String photoUrlOrKey) {
+            runOnUiThread(() -> {
+                try {
+                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                    if (clipboard == null) return;
+                    Uri uri = null;
+                    if (photoUrlOrKey != null && !photoUrlOrKey.isEmpty()) {
+                        if (sDirectUriMap.containsKey(photoUrlOrKey)) {
+                            uri = sDirectUriMap.get(photoUrlOrKey);
+                        } else if (photoUrlOrKey.startsWith("content://") || photoUrlOrKey.startsWith("file://")) {
+                            uri = Uri.parse(photoUrlOrKey);
+                        } else if (photoUrlOrKey.contains("id=")) {
+                            String idStr = photoUrlOrKey.substring(photoUrlOrKey.indexOf("id=") + 3);
+                            if (idStr.contains("&")) idStr = idStr.substring(0, idStr.indexOf("&"));
+                            try {
+                                long id = Long.parseLong(idStr);
+                                uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
+                            } catch (Exception ignored) {}
+                        }
+                    }
+                    if (uri != null) {
+                        ClipData clip = ClipData.newUri(getContentResolver(), "Photo", uri);
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(MainActivity.this, "Photo copied to clipboard 📋", Toast.LENGTH_SHORT).show();
+                    } else {
+                        ClipData clip = ClipData.newPlainText("Photo", photoUrlOrKey != null ? photoUrlOrKey : "Photo");
+                        clipboard.setPrimaryClip(clip);
+                        Toast.makeText(MainActivity.this, "Photo link copied to clipboard 📋", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Log.e(TAG, "Error copying to clipboard", e);
+                }
+            });
+            return true;
+        }
     }
 
     private String scanMediaStorePhotos() {
@@ -685,12 +732,10 @@ public class MainActivity extends Activity {
         isoFormat.setTimeZone(TimeZone.getTimeZone("UTC"));
 
         Uri[] uris = new Uri[]{
-            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-            MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI
         };
 
         for (Uri baseUri : uris) {
-            boolean isVideo = baseUri.equals(MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
             String[] projection = new String[]{
                 MediaStore.MediaColumns._ID,
                 MediaStore.MediaColumns.DISPLAY_NAME,
@@ -725,7 +770,15 @@ public class MainActivity extends Activity {
                         int height = cursor.getInt(heightCol);
 
                         if (name == null || name.isEmpty()) name = "Media_" + id;
-                        if (mime == null || mime.isEmpty()) mime = isVideo ? "video/mp4" : "image/jpeg";
+                        String lowerName = name.toLowerCase();
+                        if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mkv") || lowerName.endsWith(".mov") || lowerName.endsWith(".webm") || lowerName.endsWith(".avi") || lowerName.endsWith(".flv") || lowerName.endsWith(".3gp") || lowerName.endsWith(".wmv") || lowerName.endsWith(".m4v")) {
+                            continue;
+                        }
+                        if (mime != null && mime.startsWith("video/")) {
+                            continue;
+                        }
+
+                        if (mime == null || mime.isEmpty()) mime = "image/jpeg";
                         if (width <= 0) width = 1920;
                         if (height <= 0) height = 1080;
 
@@ -742,7 +795,7 @@ public class MainActivity extends Activity {
                         photo.put("height", height);
                         photo.put("aspectRatio", aspect);
                         photo.put("date", dateIso);
-                        photo.put("category", isVideo ? "Videos" : "Photos");
+                        photo.put("category", "Photos");
                         photo.put("fileType", mime);
                         photo.put("fileSize", size);
                         photo.put("isFavorite", false);
@@ -762,7 +815,7 @@ public class MainActivity extends Activity {
 
                         JSONArray tags = new JSONArray();
                         tags.put("device");
-                        tags.put(isVideo ? "video" : "photo");
+                        tags.put("photo");
                         photo.put("tags", tags);
                         photo.put("people", new JSONArray());
 
@@ -844,12 +897,15 @@ public class MainActivity extends Activity {
 
                         if (DocumentsContract.Document.MIME_TYPE_DIR.equals(mime)) {
                             scanDirectoryRecursive(treeUri, docId, newPhotos, isoFormat, depth + 1);
-                        } else if (mime != null && (mime.startsWith("image/") || mime.startsWith("video/"))) {
+                        } else if (mime != null && mime.startsWith("image/") && !mime.startsWith("video/")) {
+                            String lowerName = (name != null ? name.toLowerCase() : "");
+                            if (lowerName.endsWith(".mp4") || lowerName.endsWith(".mkv") || lowerName.endsWith(".mov") || lowerName.endsWith(".webm") || lowerName.endsWith(".avi") || lowerName.endsWith(".flv") || lowerName.endsWith(".3gp") || lowerName.endsWith(".wmv") || lowerName.endsWith(".m4v")) {
+                                continue;
+                            }
                             Uri docUri = DocumentsContract.buildDocumentUriUsingTree(treeUri, docId);
                             String docKey = "tree_" + Math.abs(docUri.toString().hashCode()) + "_" + Math.abs(docId.hashCode());
                             sDirectUriMap.put(docKey, docUri);
 
-                            boolean isVideo = mime.startsWith("video/");
                             String dateIso = isoFormat.format(new Date(mod > 0 ? mod : System.currentTimeMillis()));
 
                             JSONObject photo = new JSONObject();
@@ -862,7 +918,7 @@ public class MainActivity extends Activity {
                             photo.put("height", 1080);
                             photo.put("aspectRatio", 1.77);
                             photo.put("date", dateIso);
-                            photo.put("category", isVideo ? "Videos" : "Imported Folder");
+                            photo.put("category", "Imported Folder");
                             photo.put("fileType", mime);
                             photo.put("fileSize", size > 0 ? size : 2048000);
                             photo.put("isFavorite", false);
@@ -924,8 +980,6 @@ public class MainActivity extends Activity {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 permissions = new String[]{
                     "android.permission.READ_MEDIA_IMAGES",
-                    "android.permission.READ_MEDIA_VIDEO",
-                    "android.permission.READ_MEDIA_AUDIO",
                     "android.permission.ACCESS_MEDIA_LOCATION",
                     "android.permission.CAMERA"
                 };
