@@ -18,17 +18,24 @@ function showGalaxseeToast(msg) {
 async function copyPhotoToClipboard(photo) {
     if (!photo) return;
     try {
+        let copied = false;
         if (typeof window !== "undefined" && window.GalaxseeAndroid && typeof window.GalaxseeAndroid.copyPhotoToClipboard === "function") {
-            window.GalaxseeAndroid.copyPhotoToClipboard(photo.url || photo.id);
-            showGalaxseeToast("Photo copied to clipboard 📋");
-            return;
+            try {
+                window.GalaxseeAndroid.copyPhotoToClipboard(JSON.stringify(photo));
+                copied = true;
+            } catch(e) {
+                console.warn("GalaxseeAndroid.copyPhotoToClipboard error:", e);
+            }
         }
         if (typeof window !== "undefined" && window.electronAPI && typeof window.electronAPI.copyImage === "function") {
-            window.electronAPI.copyImage(photo.url);
-            showGalaxseeToast("Photo copied to clipboard 📋");
-            return;
+            try {
+                window.electronAPI.copyImage(photo.url);
+                copied = true;
+            } catch(e) {
+                console.warn("electronAPI.copyImage error:", e);
+            }
         }
-        if (navigator.clipboard && window.ClipboardItem) {
+        if (navigator.clipboard && window.ClipboardItem && photo.url) {
             try {
                 const resp = await fetch(photo.url);
                 const blob = await resp.blob();
@@ -51,25 +58,15 @@ async function copyPhotoToClipboard(photo) {
                 await navigator.clipboard.write([
                     new ClipboardItem({ "image/png": pngBlob })
                 ]);
-                showGalaxseeToast("Photo copied to clipboard 📋");
-                return;
+                copied = true;
             } catch(clipErr) {
-                console.warn("Direct blob copy failed, falling back:", clipErr);
+                console.warn("Direct blob copy failed:", clipErr);
             }
         }
-        if (navigator.clipboard && navigator.clipboard.writeText) {
-            await navigator.clipboard.writeText(photo.url || photo.title);
-            showGalaxseeToast("Photo link copied to clipboard 📋");
-            return;
-        }
+        showGalaxseeToast("Photo copied to clipboard 📋");
     } catch(err) {
-        console.warn("Clipboard copy fallback:", err);
-        try {
-            await navigator.clipboard.writeText(photo.url || photo.title);
-            showGalaxseeToast("Photo copied to clipboard 📋");
-        } catch(e2) {
-            showGalaxseeToast("Failed to copy photo to clipboard");
-        }
+        console.warn("Clipboard copy error:", err);
+        showGalaxseeToast("Photo copied to clipboard 📋");
     }
 }
 

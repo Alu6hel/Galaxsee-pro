@@ -2,6 +2,7 @@ package com.galaxsee.app;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.content.ClipDescription;
 import android.content.ClipboardManager;
 import android.content.ContentResolver;
 import android.content.ContentUris;
@@ -42,6 +43,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -81,6 +83,7 @@ public class MainActivity extends Activity {
         root.setBackgroundColor(0xFF070A12);
 
         webView = new WebView(this);
+        WebView.setWebContentsDebuggingEnabled(true);
         webView.setBackgroundColor(0xFF070A12);
         webView.setOverScrollMode(View.OVER_SCROLL_IF_CONTENT_SCROLLS);
 
@@ -689,39 +692,174 @@ public class MainActivity extends Activity {
         }
 
         @JavascriptInterface
-        public boolean copyPhotoToClipboard(String photoUrlOrKey) {
-            runOnUiThread(() -> {
+        public boolean copyPhotoToClipboard(String photoData) {
+            if (photoData == null || photoData.trim().isEmpty()) return false;
+            new Thread(() -> {
                 try {
-                    ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                    if (clipboard == null) return;
-                    Uri uri = null;
-                    if (photoUrlOrKey != null && !photoUrlOrKey.isEmpty()) {
-                        if (sDirectUriMap.containsKey(photoUrlOrKey)) {
-                            uri = sDirectUriMap.get(photoUrlOrKey);
-                        } else if (photoUrlOrKey.startsWith("content://") || photoUrlOrKey.startsWith("file://")) {
-                            uri = Uri.parse(photoUrlOrKey);
-                        } else if (photoUrlOrKey.contains("id=")) {
-                            String idStr = photoUrlOrKey.substring(photoUrlOrKey.indexOf("id=") + 3);
-                            if (idStr.contains("&")) idStr = idStr.substring(0, idStr.indexOf("&"));
-                            try {
-                                long id = Long.parseLong(idStr);
-                                uri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
-                            } catch (Exception ignored) {}
+                    String url = null;
+                    String idStr = null;
+                    String title = "Photo";
+                    String mimeType = "image/jpeg";
+                    long mediaId = -1;
+                    Uri targetUri = null;
+
+                    // 1. Try parsing JSON
+                    if (photoData.trim().startsWith("{")) {
+                        try {
+                            JSONObject json = new JSONObject(photoData);
+                            url = json.optString("url", null);
+                            idStr = json.optString("id", null);
+                            title = json.optString("title", "Photo");
+                            String ft = json.optString("fileType", null);
+                            if (ft != null && !ft.isEmpty()) mimeType = ft;
+                        } catch (Exception ignored) {}
+                    } else {
+                        url = photoData.trim();
+                    }
+
+                    // 2. Extract mediaId or targetUri
+                    if (idStr != null) {
+                        if (idStr.startsWith("android-media-")) {
+                            try { mediaId = Long.parseLong(idStr.substring("android-media-".length())); } catch (Exception ignored) {}
+                        } else if (idStr.startsWith("android-doc-")) {
+                            String key = idStr.substring("android-doc-".length());
+                            targetUri = sDirectUriMap.get(key);
+                        } else {
+                            try { mediaId = Long.parseLong(idStr); } catch (Exception ignored) {}
                         }
                     }
-                    if (uri != null) {
-                        ClipData clip = ClipData.newUri(getContentResolver(), "Photo", uri);
-                        clipboard.setPrimaryClip(clip);
-                        Toast.makeText(MainActivity.this, "Photo copied to clipboard 📋", Toast.LENGTH_SHORT).show();
-                    } else {
-                        ClipData clip = ClipData.newPlainText("Photo", photoUrlOrKey != null ? photoUrlOrKey : "Photo");
-                        clipboard.setPrimaryClip(clip);
-                        Toast.makeText(MainActivity.this, "Photo link copied to clipboard 📋", Toast.LENGTH_SHORT).show();
+
+                    if (mediaId <= 0 && targetUri == null && url != null) {
+                        if (url.startsWith("content://") || url.startsWith("file://")) {
+                            targetUri = Uri.parse(url);
+                        } else if (url.contains("/image/")) {
+                            String sub = url.substring(url.indexOf("/image/") + "/image/".length());
+                            if (sub.contains("?")) sub = sub.substring(0, sub.indexOf("?"));
+                            if (sub.contains("&")) sub = sub.substring(0, sub.indexOf("&"));
+                            if (sub.contains("#")) sub = sub.substring(0, sub.indexOf("#"));
+                            if (sub.startsWith("doc_")) {
+                                String key = sub.substring(4);
+                                targetUri = sDirectUriMap.get(key);
+                                if (targetUri == null) {
+                                    try { targetUri = Uri.parse(Uri.decode(key)); } catch (Exception ignored) {}
+                                }
+                            } else {
+                                try { mediaId = Long.parseLong(sub); } catch (Exception ignored) {}
+                            }
+                        } else if (url.contains("/thumbnail/")) {
+                            String sub = url.substring(url.indexOf("/thumbnail/") + "/thumbnail/".length());
+                            if (sub.contains("?")) sub = sub.substring(0, sub.indexOf("?"));
+                            if (sub.contains("&")) sub = sub.substring(0, sub.indexOf("&"));
+                            if (sub.contains("#")) sub = sub.substring(0, sub.indexOf("#"));
+                            if (sub.startsWith("doc_")) {
+                                String key = sub.substring(4);
+                                targetUri = sDirectUriMap.get(key);
+                            } else {
+                                try { mediaId = Long.parseLong(sub); } catch (Exception ignored) {}
+                            }
+                        } else if (url.contains("/direct_uri/")) {
+                            String key = url.substring(url.indexOf("/direct_uri/") + "/direct_uri/".length());
+                            targetUri = sDirectUriMap.get(key);
+                            if (targetUri == null) {
+                                try { targetUri = Uri.parse(Uri.decode(key)); } catch (Exception ignored) {}
+                            }
+                        } else if (url.startsWith("android-media-")) {
+                            try { mediaId = Long.parseLong(url.substring("android-media-".length())); } catch (Exception ignored) {}
+                        } else if (sDirectUriMap.containsKey(url)) {
+                            targetUri = sDirectUriMap.get(url);
+                        } else {
+                            try { mediaId = Long.parseLong(url); } catch (Exception ignored) {}
+                        }
                     }
+
+                    Uri imageContentUri = null;
+                    InputStream inStream = null;
+
+                    if (mediaId > 0) {
+                        imageContentUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, mediaId);
+                        try {
+                            String t = getContentResolver().getType(imageContentUri);
+                            if (t != null && !t.isEmpty()) mimeType = t;
+                        } catch (Exception ignored) {}
+                        try {
+                            inStream = getContentResolver().openInputStream(imageContentUri);
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error opening MediaStore stream for " + mediaId, e);
+                        }
+                    } else if (targetUri != null) {
+                        imageContentUri = targetUri;
+                        try {
+                            String t = getContentResolver().getType(targetUri);
+                            if (t != null && !t.isEmpty()) mimeType = t;
+                        } catch (Exception ignored) {}
+                        try {
+                            if ("file".equalsIgnoreCase(targetUri.getScheme())) {
+                                inStream = new FileInputStream(new File(targetUri.getPath()));
+                            } else {
+                                inStream = getContentResolver().openInputStream(targetUri);
+                            }
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error opening targetUri stream for " + targetUri, e);
+                        }
+                    }
+
+                    File clipboardDir = new File(getCacheDir(), "clipboard");
+                    if (!clipboardDir.exists()) clipboardDir.mkdirs();
+
+                    String ext = ".jpg";
+                    if (mimeType != null && mimeType.contains("png")) ext = ".png";
+                    else if (mimeType != null && mimeType.contains("webp")) ext = ".webp";
+                    else if (mimeType != null && mimeType.contains("gif")) ext = ".gif";
+
+                    File clipFile = new File(clipboardDir, "photo" + ext);
+                    if (inStream != null) {
+                        try (FileOutputStream fos = new FileOutputStream(clipFile)) {
+                            byte[] buf = new byte[65536];
+                            int len;
+                            while ((len = inStream.read(buf)) != -1) {
+                                fos.write(buf, 0, len);
+                            }
+                            fos.flush();
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error caching clipboard photo file", e);
+                        } finally {
+                            try { inStream.close(); } catch (Exception ignored) {}
+                        }
+                    }
+
+                    Uri providerUri = Uri.parse("content://" + GalaxseeMediaProvider.AUTHORITY + "/photo" + ext);
+                    final Uri finalClipUri = (imageContentUri != null && "content".equals(imageContentUri.getScheme()) && imageContentUri.toString().contains("media/external")) ? imageContentUri : providerUri;
+                    final String finalMime = (mimeType != null && !mimeType.isEmpty()) ? mimeType : "image/jpeg";
+                    final String finalTitle = title;
+
+                    runOnUiThread(() -> {
+                        try {
+                            ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                            if (clipboard == null) return;
+
+                            String[] mimeTypes = new String[]{ finalMime, "image/*" };
+                            ClipDescription description = new ClipDescription(finalTitle, mimeTypes);
+                            ClipData.Item item = new ClipData.Item(finalClipUri);
+                            ClipData clip = new ClipData(description, item);
+
+                            try {
+                                grantUriPermission("android", providerUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                if (finalClipUri != providerUri) {
+                                    grantUriPermission("android", finalClipUri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                                }
+                            } catch (Exception ignored) {}
+
+                            clipboard.setPrimaryClip(clip);
+                            Toast.makeText(MainActivity.this, "Physical photo copied to clipboard 📋", Toast.LENGTH_SHORT).show();
+                            Log.d(TAG, "Physical photo copied to clipboard: " + finalClipUri + " (" + finalMime + ")");
+                        } catch (Exception e) {
+                            Log.e(TAG, "Error setting image clipboard clip", e);
+                        }
+                    });
                 } catch (Exception e) {
-                    Log.e(TAG, "Error copying to clipboard", e);
+                    Log.e(TAG, "copyPhotoToClipboard background error", e);
                 }
-            });
+            }).start();
             return true;
         }
     }
