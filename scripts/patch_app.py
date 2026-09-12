@@ -6,13 +6,17 @@ def patch_js(filepath):
         code = f.read()
 
     # 1. Confetti Disabling
+    target_export = "h.exports=function(){return F().apply(this,arguments)},h.exports.reset=function(){F().reset()},h.exports.create=R,h.exports.shapeFromPath=V,h.exports.shapeFromText=Ce"
+    repl_export = "const _noConfetti=Object.assign((()=>Promise.resolve()),{reset:()=>{},create:()=>(()=>Promise.resolve()),shapeFromPath:()=>{},shapeFromText:()=>{}});h.exports=_noConfetti;h.exports.reset=()=>{};h.exports.create=()=>_noConfetti;h.exports.shapeFromPath=()=>{};h.exports.shapeFromText=()=>{}"
+    if target_export in code:
+        code = code.replace(target_export, repl_export, 1)
+        print("[1/6 a] Neutralized canvas-confetti library export")
+
     target_fu = "const Fu=eh.exports;eh.exports.create;"
-    replacement_fu = "const Fu=function(){};eh.exports.create;"
+    repl_fu = "const Fu=Object.assign((()=>Promise.resolve()),{reset:()=>{},create:()=>(()=>Promise.resolve()),shapeFromPath:()=>{},shapeFromText:()=>{}});eh.exports=Fu;eh.exports.create=Fu.create;if(typeof window<\"u\"){window.confetti=Fu;}"
     if target_fu in code:
-        code = code.replace(target_fu, replacement_fu, 1)
-        print("[1/6] Disabled confetti (Fu)")
-    else:
-        print("[1/6] Warning: target_fu not found")
+        code = code.replace(target_fu, repl_fu, 1)
+        print("[1/6 b] Disabled confetti (Fu)")
 
     # 2. Sound Removal & Haptic Integration
     # Define triggerHaptic and replace we audio oscillators with silent haptic triggers
