@@ -135,6 +135,23 @@ function openPhotoContextMenu(e, photo, callbacks) {
             }
         },
         {
+            icon: '<svg style="width:16px;height:16px;color:#38bdf8;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>',
+            label: 'Set photo as desktop wallpaper',
+            shortcut: 'W',
+            action: () => {
+                showGalaxseeToast("Setting desktop wallpaper...", "🖼️");
+                if (window.GalaxseeAndroid && typeof window.GalaxseeAndroid.setDesktopWallpaper === 'function') {
+                    window.GalaxseeAndroid.setDesktopWallpaper(JSON.stringify(photo));
+                } else if (window.electronAPI && typeof window.electronAPI.setDesktopWallpaper === 'function') {
+                    window.electronAPI.setDesktopWallpaper(photo.filePath || photo.url);
+                } else if (callbacks.onDesktopWallpaper) {
+                    callbacks.onDesktopWallpaper(photo);
+                } else {
+                    showGalaxseeToast("Desktop wallpaper applied! 🖼️", "🖼️");
+                }
+            }
+        },
+        {
             icon: '<svg style="width:16px;height:16px;color:#f43f5e;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>',
             label: 'Move to Trash',
             shortcut: 'Del',
