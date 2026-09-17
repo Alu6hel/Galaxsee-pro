@@ -36,8 +36,23 @@ Built and optimized for **Windows Desktop (`.exe`)**, **Android Mobile (`.apk`)*
 - **AES-256 Encryption**: Protect sensitive photos behind biometric authentication or custom PIN.
 - **Zero Cloud Leak**: 100% local processing; no telemetry, tracking, or cloud upload.
 
+### 📐 Algorithmic SVG Vector Converter Studio
+- **Pure Algorithmic Determinism**: 100% mathematical contour vectorization and color clustering. Zero cloud AI, zero third-party API dependencies, zero privacy leaks.
+- **Universal Format Transcoding**: Converts PNG, JPEG, WebP, AVIF, HEIC, BMP, and GIF directly into standard W3C XML `<svg>` vectors.
+- **Three Dynamic Vector Modes**:
+  - *Pure Vector*: Quantized multi-color polygon paths (8, 16, 32, 64 colors).
+  - *Monochrome Silhouette*: High-contrast unified compound path for cutting plotters (Cricut/Silhouette), vinyl decals, stamps, and laser engraving.
+  - *High-Fidelity Hybrid*: Sharp vector contour overlay over embedded base photo for artistic mixed media.
+- **Scale-Invariant Multi-Scale Grid**: Intelligent downsampling (640px, 1080px, 1440px) allowing instant vectorization of 48MP/8K photos without memory exhaustion.
+- **Direct Android Downloads Storage**: Saves directly to `/sdcard/Download/Galaxsee/` with Android MediaScanner registration.
+
+### 🔄 Universal In-App Update Engine
+- **GitHub Releases Integration**: Automated checks against official repositories (`/releases/latest`) with tag comparison and release highlights modal.
+- **Seamless Package Installation**: Background streaming download with real-time progress bar and zero-permission installation via Android `PackageInstaller` and `GalaxseeFileProvider`.
+
 ### 🎧 Lossless Audio & Media Studio
 - **Audio Workstation**: High-fidelity spectrum analyzer, waveform preview, and metadata tag editor for FLAC, WAV, and MP3 audio tracks.
+
 
 ---
 
