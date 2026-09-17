@@ -13,6 +13,11 @@ async function evalInWebview(expr) {
   const ws = new WebSocket(wsUrl);
 
   return new Promise((resolve, reject) => {
+    const timer = setTimeout(() => {
+      try { ws.close(); } catch {}
+      reject(new Error('CDP timeout'));
+    }, 4000);
+
     ws.onopen = () => {
       ws.send(JSON.stringify({
         id: 1,
@@ -21,15 +26,19 @@ async function evalInWebview(expr) {
       }));
     };
     ws.onmessage = msg => {
+      clearTimeout(timer);
       const resp = JSON.parse(msg.data);
-      ws.close();
+      try { ws.close(); } catch {}
       if (resp.result && resp.result.result) {
         resolve(resp.result.result.value);
       } else {
         resolve(resp);
       }
     };
-    ws.onerror = reject;
+    ws.onerror = err => {
+      clearTimeout(timer);
+      reject(err);
+    };
   });
 }
 
@@ -40,6 +49,7 @@ evalInWebview(expr)
     process.exit(0);
   })
   .catch(err => {
-    console.error(err);
+    console.error(err.message || err);
     process.exit(1);
   });
+
