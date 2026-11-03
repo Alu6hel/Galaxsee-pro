@@ -27,13 +27,20 @@ def patch_bundle(file_path):
     else:
         print("[1a] Note: target_logo_def not found or already patched")
 
-    target_logo_img = 'a.jsx("img",{src:I,alt:"Alu Logo",onError:E=>{E.currentTarget.src=D?"./light alu logo.png":"./dark alu company logo.png"},className:"w-full h-full object-contain"})'
-    repl_logo_img = 'a.jsx("img",{src:I,alt:"Galaxsee Logo",onError:E=>{E.currentTarget.src="./app_icon_512.png"},className:"w-full h-full object-contain"})'
-    if target_logo_img in code:
-        code = code.replace(target_logo_img, repl_logo_img, 1)
-        print("[1b] Patched header brand logo image tag with fallback to ./app_icon_512.png")
+    # 1b. Header Brand Logo Image Tag & Container Fill
+    target_logo_container = 'justify-center p-0.5 overflow-hidden \,children:a.jsx("img",{src:I,alt:"Galaxsee Logo",onError:E=>{E.currentTarget.src="./app_icon_512.png"},className:"w-full h-full object-contain"})'
+    repl_logo_container = 'justify-center overflow-hidden bg-transparent\,children:a.jsx("img",{src:I,alt:"Galaxsee Logo",onError:E=>{E.currentTarget.src="./app_icon_512.png"},className:"w-full h-full object-cover rounded-[6px]"})'
+    if target_logo_container in code:
+        code = code.replace(target_logo_container, repl_logo_container, 1)
+        print("[1b] Patched header brand logo container and image tag to fill space edge-to-edge")
     else:
-        print("[1b] Note: target_logo_img not found or already patched")
+        target_logo_img = 'a.jsx("img",{src:I,alt:"Alu Logo",onError:E=>{E.currentTarget.src=D?"./light alu logo.png":"./dark alu company logo.png"},className:"w-full h-full object-contain"})'
+        repl_logo_img = 'a.jsx("img",{src:I,alt:"Galaxsee Logo",onError:E=>{E.currentTarget.src="./app_icon_512.png"},className:"w-full h-full object-cover rounded-[6px]"})'
+        if target_logo_img in code:
+            code = code.replace(target_logo_img, repl_logo_img, 1)
+            print("[1b] Patched header brand logo image tag to fill space edge-to-edge")
+        else:
+            print("[1b] Note: target_logo_img not found or already patched")
 
     # 2. Photo Viewer (cv) Active Photo Tracking & Back Button Accessibility
     target_cv_effect = 'M.useEffect(()=>{I(1),P({x:0,y:0}),H(0)},[d.id]);'
@@ -155,6 +162,15 @@ def patch_bundle(file_path):
         print("[6b] Linked Qv photo card click to active photo ID & folder memory")
     else:
         print("[6b] Note: target_qv_photo_click not found or already patched")
+
+    # 7. Precise Search Engine Upgrade (Fast Keyword, Tag, Number & Date matching)
+    target_my = 'function my(d,u,h=.5){var _,x,T,N,A;if(!d||!d.trim()||u.length===0)return[];const m=d.trim().toLowerCase(),g=m.split(/[\\s,._-]+/).filter(Boolean),w=uy(m),y=[],k=g.filter(D=>Um[D]);for(let D=0;D<u.length;D++){const I=u[D],U=Xu(I);let P=fy(w,U),ae;const H=(I.title||"").toLowerCase(),E=(_=I.tags)==null?void 0:_.some(K=>m.includes(K.toLowerCase())),Z=((T=(x=I.location)==null?void 0:x.city)==null?void 0:T.toLowerCase().includes(m))||((A=(N=I.location)==null?void 0:N.country)==null?void 0:A.toLowerCase().includes(m));if((H.includes(m)||E||Z)&&(P=Math.min(1,P+.25),ae="Keyword & Tag Match"),k.length>0&&I.colorPalette&&I.colorPalette.length>0)for(const K of k){const X=Um[K];X&&I.colorPalette.some(me=>{const De=ry(me);return De?cy(De,X)<90:!1})&&(P=Math.min(1,P+.15),ae=ae?`${ae} + Dominant ${K}`:`Dominant Color (${K})`)}P>=h&&y.push({photo:I,score:P,matchReason:ae||`Semantic Match (${Math.round(P*100)}%)`})}return y.sort((D,I)=>I.score-D.score),y}'
+    repl_my = '''function my(d,u,h=.5){if(!d||!d.trim()||!u||u.length===0)return[];const raw=d.trim().toLowerCase(),terms=raw.split(/[\\s,._-]+/).filter(Boolean);if(terms.length===0)return[];const out=[];for(let i=0;i<u.length;i++){const it=u[i];if(!it)continue;const title=(it.title||"").toLowerCase(),desc=(it.description||"").toLowerCase(),path=(it.filePath||it.localPath||"").toLowerCase(),folder=(it.folder||"").toLowerCase(),cat=(it.category||"").toLowerCase(),ft=(it.fileType||"").toLowerCase();let yr="",mo="",mosh="",dy="";if(it.date){try{const dt=new Date(it.date);if(!isNaN(dt.getTime())){yr=String(dt.getFullYear()),mo=dt.toLocaleString("en-US",{month:"long"}).toLowerCase(),mosh=dt.toLocaleString("en-US",{month:"short"}).toLowerCase(),dy=String(dt.getDate())}}catch{}}const city=(it.location&&it.location.city?it.location.city:"").toLowerCase(),country=(it.location&&it.location.country?it.location.country:"").toLowerCase(),locName=(it.location&&it.location.name?it.location.name:"").toLowerCase(),make=(it.exif&&it.exif.cameraMake?it.exif.cameraMake:"").toLowerCase(),model=(it.exif&&it.exif.cameraModel?it.exif.cameraModel:"").toLowerCase(),iso=it.exif&&it.exif.iso!=null?String(it.exif.iso):"",tags=Array.isArray(it.tags)?it.tags.map(t=>String(t).toLowerCase()):[],ppl=Array.isArray(it.people)?it.people.map(p=>String(p).toLowerCase()):[];let colorMatch=!1,colorName="";if(it.colorPalette&&it.colorPalette.length>0&&typeof Um<"u")for(const t of terms){const rgb=Um[t];if(rgb&&typeof ry==="function"&&typeof cy==="function"&&it.colorPalette.some(c=>{const cRgb=ry(c);return cRgb?cy(cRgb,rgb)<90:!1})){colorMatch=!0,colorName=t;break}}let full=!1,score=0,reason="";if(title===raw)score+=2000,reason="Exact Title",full=!0;else if(title.startsWith(raw))score+=1200,reason="Title Starts With",full=!0;else if(title.includes(raw))score+=800,reason="Title Match",full=!0;else if(desc.includes(raw)||path.includes(raw))score+=600,reason="Filename Match",full=!0;else if(tags.some(t=>t===raw||t.includes(raw)))score+=500,reason="Tag Match",full=!0;else if(ppl.some(p=>p===raw||p.includes(raw)))score+=500,reason="Person Match",full=!0;let allTerms=!0;for(const t of terms){let tScore=0;if(title===t)tScore+=1000;else if(title.startsWith(t))tScore+=600;else if(title.includes(t))tScore+=400;else if(desc.includes(t)||path.includes(t))tScore+=300;else if(tags.some(tg=>tg.includes(t)))tScore+=250;else if(ppl.some(p=>p.includes(t)))tScore+=250;else if(folder.includes(t)||cat.includes(t))tScore+=180;else if(ft.includes(t)||t.length>=3&&("."+t).includes(ft.replace("image/",".")))tScore+=150;else if(yr&&(t===yr||t.length>=4&&yr.includes(t))||mo&&mo.startsWith(t)||mosh&&mosh===t||dy&&dy===t)tScore+=140;else if(city.includes(t)||country.includes(t)||locName.includes(t))tScore+=120;else if(make.includes(t)||model.includes(t)||iso&&iso===t)tScore+=100;else if(colorMatch&&colorName===t)tScore+=200;if(tScore>0)score+=tScore;else{allTerms=!1;break}}if(full||allTerms&&score>0)out.push({photo:it,score:Math.min(1,.5+score/3000),rawScore:score,matchReason:reason||(colorMatch?`Dominant Color (${colorName})`:"Keyword Match")})}return out.sort((a,b)=>b.rawScore-a.rawScore),out}'''
+    if target_my in code:
+        code = code.replace(target_my, repl_my, 1)
+        print("[7] Upgraded search engine with precise keyword, number, tag, and date matching")
+    else:
+        print("[7] Note: target_my not found or already patched")
 
     # Write patched file
     with open(file_path, "w", encoding="utf-8") as f:

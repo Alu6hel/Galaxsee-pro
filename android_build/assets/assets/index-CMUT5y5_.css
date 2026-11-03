@@ -401,3 +401,17 @@ header.h-12 {
   font-size: 15px !important;
   font-weight: 800 !important;
 }
+
+
+/* Galaxsee Pro Mobile Layout & Editor Grid Fix */
+.grid-cols-7 {
+  display: grid !important;
+  grid-template-columns: repeat(7, minmax(0, 1fr)) !important;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+}
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
